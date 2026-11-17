@@ -61,12 +61,16 @@ p { margin: 0; max-width: 68ch; }
 .hits button { text-align: left; font: 14px var(--body); border: 0; background: none; color: var(--ink); padding: 7px 9px; border-radius: var(--r); cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
 .hits button:hover, .hits button.sel { background: var(--soft); }
 .hits small { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
+.cur { display: none; flex: 1; min-width: 0; font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent);
+  background: transparent; border: 1px solid var(--line); border-radius: var(--r); padding: 6px 8px; }
+.cur:focus-visible { outline: 2px solid var(--accent); }
+@media (max-width: 600px) { .links { display: none; } .cur { display: block; } }
 .links { -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
 @media (max-width: 640px) { .brand { font-size: 16px; } .find { flex: 0 1 104px; min-width: 88px; } .find input { padding-left: 26px; } }
 
 /* hero */
 header.top { padding-block: 44px 0; display: grid; gap: 20px; }
-.hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px; align-items: end; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; }
 @media (max-width: 860px) { .hero { grid-template-columns: 1fr; } }
 .def { font-size: 18px; line-height: 1.45; }
 .def b { color: var(--accent); }
@@ -140,7 +144,7 @@ input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offs
 .wi { display: grid; gap: 3px; font-size: 14px; }
 .wi > div { display: grid; grid-template-columns: 26px minmax(0, 1fr) 52px 44px; gap: 8px; align-items: center; padding: 5px 8px; border-radius: var(--r); background: var(--surface); cursor: pointer; }
 .wi > div:hover { background: var(--soft); }
-.wi > div.new { background: var(--accent-soft); }
+.wi > div.new { background: none; box-shadow: inset 2px 0 0 var(--accent); }
 .wi .nr { font-family: var(--display); font-size: 18px; color: var(--accent); text-align: right; }
 .mv { font-family: var(--mono); font-size: 12px; text-align: right; }
 .mv.up { color: var(--accent); } .mv.dn { color: var(--muted); }
@@ -152,7 +156,7 @@ svg .ax { stroke: var(--line); }
 .sc-wrap { position: relative; }
 .pt { transition: transform .7s var(--ease); cursor: pointer; }
 .pt circle { transition: fill .4s, r .4s, fill-opacity .4s; fill: var(--line); fill-opacity: .75; stroke: var(--surface); stroke-width: 1.5; }
-.pt.pass circle { fill: var(--normal); fill-opacity: .6; }
+.pt.pass circle { fill: transparent; stroke: var(--muted); stroke-width: 1.5; }
 .pt.top circle { fill: var(--accent); fill-opacity: .95; }
 .pt:hover circle, .pt:focus-visible circle { stroke: var(--ink); stroke-width: 2; }
 .pt:focus-visible { outline: none; }
@@ -163,6 +167,7 @@ svg .ax { stroke: var(--line); }
 .tip.on { opacity: 1; }
 .tip b { display: block; font-size: 13px; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+.legend .nomark::before { display: none; }
 .legend .sz::before { background: transparent !important; border: 1.5px solid var(--muted); }
 .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--c); }
 .draw { stroke-dasharray: var(--len); stroke-dashoffset: 0; animation: draw 1.4s var(--ease) both; }
@@ -191,13 +196,20 @@ tr.hi td { background: var(--accent-soft); font-weight: 600; }
 ul.lim { margin: 0; padding-left: 18px; display: grid; gap: 8px; max-width: 82ch; }
 
 /* card */
+.pc-hero { display: flex; align-items: flex-end; gap: clamp(14px, 3vw, 28px); }
+.pc-rk { font: 700 clamp(72px, 13vw, 112px) / .78 var(--display); color: var(--accent); text-shadow: 0 0 44px var(--glow); }
+.pc-sc { font: 500 clamp(40px, 7vw, 66px) / 1 var(--mono); font-variant-numeric: tabular-nums; display: block; }
+.pc-hero span { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.lbl { font: 500 11.5px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+@media (max-width: 560px) { dialog { width: 100vw !important; max-width: 100vw; height: 100dvh; max-height: 100dvh !important; margin: 0; border: 0 !important; border-radius: 0 !important; } }
+dialog { overflow: auto; }
 dialog { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); width: min(740px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 0; box-shadow: var(--shadow); }
 dialog[open] { animation: card .3s var(--ease); }
 @keyframes card { from { transform: translateY(14px) scale(.98); opacity: .4; } }
 dialog::backdrop { background: rgba(8, 8, 20, .55); backdrop-filter: blur(2px); }
 .dlg { padding: 22px; display: grid; gap: 16px; }
 .dlg-h { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
-.dlg-h h2 { font-size: clamp(28px, 5vw, 40px); }
+.dlg-h h2 { font-size: clamp(26px, 6vw, 40px); line-height: 1; }
 .dlg-nav { display: flex; gap: 6px; }
 .x { font: 600 13px var(--body); border: 1px solid var(--line); background: var(--soft); color: var(--ink); border-radius: var(--r); padding: 6px 11px; cursor: pointer; transition: border-color .2s; }
 .x:hover { border-color: var(--accent); } .x:disabled { opacity: .4; cursor: default; }
@@ -208,7 +220,7 @@ dialog::backdrop { background: rgba(8, 8, 20, .55); backdrop-filter: blur(2px); 
 .pair b { font-family: var(--mono); font-size: 17px; font-weight: 500; }
 .verdict { font-size: 15px; padding: 12px 14px; border-radius: var(--r); background: var(--normal-soft); }
 footer { font-size: 13px; color: var(--muted); }
-@media (max-width: 520px) { .row { grid-template-columns: 30px minmax(0, 1fr) 52px 12px; } .row .chip { font-size: 0; width: 10px; height: 10px; padding: 0; border-radius: 50%; border-width: 1.5px; }
+@media (max-width: 520px) { .row { grid-template-columns: 30px minmax(0, 1fr) auto; } .row .bar { display: none; } .row .chip { font-size: 10px; padding: 1px 6px; }
   .sens > div { grid-template-columns: minmax(0, 1fr) 70px 70px; } .heat { grid-template-columns: 74px repeat(3, minmax(0, 1fr)); } }
 
 /* scroll progress, under the rail */
@@ -247,15 +259,15 @@ header.top::before { content: ""; position: absolute; z-index: -1; inset: -120px
   background: radial-gradient(42% 60% at 50% 0%, var(--glow), transparent 70%), radial-gradient(18% 30% at 50% 0%, color-mix(in srgb, #fff 9%, transparent), transparent 70%); }
 .anim header.top::before { animation: flood 2.2s var(--ease) both; }
 @keyframes flood { 0% { opacity: 0; transform: translateX(-12%) scaleX(.6); } 35% { opacity: .5; } 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
-h1.slam { font-size: clamp(56px, 12.5vw, 150px); line-height: .86; letter-spacing: -.005em; }
+h1.slam { font-size: clamp(52px, 11vw, 120px); line-height: .86; letter-spacing: -.005em; }
 h1.slam span { display: block; }
-.kicker { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.kicker i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
+.kicker { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); display: flex; gap: 10px; align-items: flex-start; }
+.kicker i { flex: none; margin-top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
 .lede { font-size: 17px; color: var(--muted); max-width: 46ch; }
 .lede b { color: var(--ink); font-weight: 600; }
 
 /* split-flap scoreboard */
-.board3 { display: grid; gap: 6px; background: color-mix(in srgb, var(--ink) 92%, var(--bg)); color: var(--bg); padding: 14px; border-radius: var(--r); box-shadow: 0 30px 80px -40px var(--glow); }
+.board3 { display: grid; gap: 6px; max-width: 980px; padding: clamp(14px, 2.4vw, 26px) !important; background: color-mix(in srgb, var(--ink) 92%, var(--bg)); color: var(--bg); padding: 14px; border-radius: var(--r); box-shadow: 0 30px 80px -40px var(--glow); }
 :root:not([data-theme="light"]) .board3 { background: #05060c; color: #f3f2fa; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .board3 { background: #0d0e1b; color: #f3f2fa; } }
 .brow { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "tag tag" "flap sc"; gap: 4px 12px; align-items: center; cursor: pointer; border: 0; background: none; color: inherit; padding: 0; text-align: left; font: inherit; }
@@ -264,11 +276,11 @@ h1.slam span { display: block; }
 .brow .sc { grid-area: sc; }
 .brow + .brow { margin-top: 10px; }
 .flap { grid-area: flap; display: flex; flex-wrap: nowrap; gap: 2px; min-width: 0; }
-.flap span { display: inline-grid; place-items: center; flex: 0 1 26px; min-width: 0; aspect-ratio: 26 / 38; background: #171a2c;
-  border-radius: 2px; font: 700 clamp(14px, 2vw, 26px) var(--display); text-transform: uppercase; position: relative; overflow: hidden; color: #f3f2fa; }
+.flap span { display: inline-grid; place-items: center; flex: 0 1 44px; min-width: 0; aspect-ratio: 44 / 60; background: #171a2c;
+  border-radius: 2px; font: 700 clamp(17px, 3.6vw, 42px) var(--display); text-transform: uppercase; position: relative; overflow: hidden; color: #f3f2fa; }
 .flap span::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,.65); }
 .flap span.sp { background: transparent; }
-.brow .sc { font: 500 clamp(18px, 2.4vw, 28px) var(--mono); color: #ff4f93; font-variant-numeric: tabular-nums; }
+.brow .sc { font: 500 clamp(26px, 5.6vw, 76px) var(--mono); color: #ff4f93; font-variant-numeric: tabular-nums; text-shadow: 0 0 34px rgba(255,79,147,.45); }
 
 /* label/value stat strip */
 .strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1px solid var(--line); }
@@ -296,6 +308,8 @@ h1.slam span { display: block; }
 .mega b { font: 700 clamp(140px, 24vw, 300px) / .78 var(--display); color: var(--accent); letter-spacing: -.02em; text-shadow: 0 0 60px var(--glow); }
 .mega span { color: var(--muted); font-size: 15px; max-width: 34ch; }
 .mega span strong { color: var(--ink); }
+.checks { display: grid; gap: 30px; }
+.checks > div { border-top: 1px solid var(--line); padding-top: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
 .score4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 .score4 > div { padding: 22px 18px 18px; display: grid; gap: 8px; align-content: start; }
 .score4 > div + div { border-left: 1px solid var(--line); }
@@ -335,6 +349,7 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
 
 <nav class="rail gut" aria-label="Sections"><div class="rail-in">
   <span class="brand">Pressure <b>Board</b></span>
+  <select class="cur" id="cursec" aria-label="Jump to section"></select>
   <div class="links" id="links">
     <a href="#lists">Lists</a><a href="#land">Pressure in 3D</a><a href="#why">Why output</a><a href="#tested">Tested</a><a href="#lab">What-if lab</a><a href="#line">Pressure line</a><a href="#robust">Robustness</a><a href="#limits">Limits</a>
   </div>
@@ -345,7 +360,7 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
 
 <div class="gut"><div class="wrap">
   <header class="top">
-    <div class="kicker"><i></i>SupeRR Selector S2 · Round 1 · IPL + T20I since 2022</div>
+    <div class="kicker"><i></i><span>SupeRR Selector S2 · Round 1 · IPL + T20I since 2022</span></div>
     <div class="hero">
       <div style="display:grid;gap:22px">
         <h1 class="slam"><span>Who holds</span><span>their <em>nerve</em></span></h1>
@@ -362,7 +377,7 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
 
   <section id="lists" aria-labelledby="h-lists">
     <div class="sec-h"><h2 id="h-lists">The two lists</h2>
-      <span class="hint">Tap a player for the evidence · <span class="chip firm">firm</span><span class="chip likely">likely</span><span class="chip near-tie">near-tie</span></span></div>
+      <span class="hint">Tap a player for the evidence <span class="chip firm">firm</span><span class="chip likely">likely</span><span class="chip near-tie">near-tie</span></span></div>
     <div class="two">
       <div class="panel"><div class="board-head"><h3>Batters</h3><span class="muted mono small" id="kc-bat"></span></div><div class="board pre" id="list-bat"></div></div>
       <div class="panel"><div class="board-head"><h3>Bowlers</h3><span class="muted mono small" id="kc-bowl"></span></div><div class="board pre" id="list-bowl"></div></div>
@@ -383,7 +398,7 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
       </div>
     </div>
     <div class="stage" id="stage" role="img" aria-label="3D chart: average Pressure Index in a chase by required run rate and overs left. Pressure is highest when few overs remain and the required rate is 8 to 14."></div>
-    <div class="scale3"><span>PI 0</span><i></i><span id="f-max"></span><span class="hint" style="margin-left:12px">drag to turn · point at a tower</span></div>
+    <div class="scale3"><span>0×</span><i></i><span id="f-max"></span><span class="hint" style="margin-left:12px">drag to turn · point at a tower</span></div>
   </section>
 
   <section id="why" aria-labelledby="h-why">
@@ -395,7 +410,7 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
     <details class="more"><summary>See the split-half test</summary><div class="in">
       <div class="two">
         <div class="panel"><h3 style="margin-bottom:10px">Does it repeat? (split-half r)</h3><div id="repeat"></div>
-          <div class="legend" style="margin-top:6px"><span style="--c:var(--accent)">Batters</span><span style="--c:var(--normal)">Bowlers</span></div></div>
+          <div class="legend" style="margin-top:6px"><span style="--c:var(--ink)">Batters (upper bar)</span><span style="--c:var(--muted)">Bowlers (lower bar)</span><span class="nomark">pink = what we rank</span></div></div>
         <div class="callout" id="odd"></div>
       </div></div></details>
   </section>
@@ -412,13 +427,14 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
       <div><b class="num" id="t-naive"></b><span id="t-naive-s"></span></div>
       <div><b class="num" id="t-bt"></b><span id="t-bt-s"></span></div>
     </div>
-    <details class="more"><summary>Open the four checks</summary><div class="in"><div class="two">
-      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Do pressure balls decide matches?</h3><div class="sens" id="decides"></div></div>
-      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Who rises, who dips</h3><div class="scroll"><table id="rise"></table></div><div id="rise-names" class="small"></div></div>
-      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Against a death-overs list</h3><p class="muted small" id="naive-h"></p>
+    <details class="more"><summary>Open the four checks</summary><div class="in"><div class="checks">
+      <div><h3>Do pressure balls decide matches?</h3><div class="sens" id="decides"></div></div>
+      <div><h3>Who rises, who dips</h3><div class="scroll"><table id="rise"></table></div>
+        <details class="more"><summary>Who they are</summary><div class="in"><div id="rise-names" class="small"></div></div></details></div>
+      <div><h3>Against a death-overs list</h3><p class="muted small" id="naive-h"></p>
         <div class="seg" id="nv-seg" role="group" aria-label="Role" style="--n:2;justify-self:start"><button data-r="bat" aria-pressed="true">Batters</button><button data-r="bowl" aria-pressed="false">Bowlers</button></div>
         <div class="scroll"><table id="naive"></table></div></div>
-      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Head-to-head backtest</h3><div class="scroll"><table id="bt"></table></div><p class="muted small" id="bt-note"></p></div>
+      <div><h3>Head-to-head backtest</h3><p class="small" id="bt-note"></p><div class="scroll"><table id="bt"></table></div></div>
     </div></div></details>
   </section>
 
@@ -439,7 +455,7 @@ details.more[open] > .in { animation: drop .45s var(--ease); }
         <div class="board-head" style="margin:0"><h3>The whole pool</h3>
           <div class="seg" id="y-seg" role="group" aria-label="Vertical axis" style="--n:2"><button data-y="A" aria-pressed="true">Pressure output</button><button data-y="E" aria-pressed="false">Rating</button></div></div>
         <div class="sc-wrap" id="sc-wrap"><div id="scatter"></div><div class="tip" id="tip"></div></div>
-        <div class="legend"><span style="--c:var(--accent)">Top 10 now</span><span style="--c:var(--normal)">Passes the gate</span><span style="--c:var(--line)">Outside the gate</span><span class="sz">Size = pressure balls</span></div>
+        <div class="legend"><span style="--c:var(--accent)">Top 10 now</span><span class="sz">Passes the gate</span><span style="--c:var(--line)">Outside the gate</span><span class="nomark">Bigger dot = more pressure balls</span></div>
       </div>
     </div>
     <details class="more"><summary>How KC was chosen</summary><div class="in"><div class="two">
@@ -559,7 +575,7 @@ function setNum(el, v, dec = 0, pre = "", suf = "") {
   const dv = bt["death overs (no win model)"].bat.test_rv_per100, ov = bt["ours"].bat.test_rv_per100;
   setNum($("#t-bt"), dv, 1, dv > 0 ? "+" : "");
   $("#t-bt-s").textContent = `death-overs batting picks in the next two seasons (ours +${(+ov).toFixed(1)})`;
-  $("#line-bigs").innerHTML = `<b class="num">1.5</b><span><strong>The pressure line.</strong> ${Math.round(D.headline.balls)}% of balls clear it, and each swings the match ${(+D.headline.lever).toFixed(1)}× as much as an average ball.</span>`;
+  $("#line-bigs").innerHTML = `<b class="num">1.5</b><span><strong>The pressure line.</strong> ${Math.round(D.headline.balls)}% of balls clear it, each worth ${(+D.headline.lever).toFixed(1)}× an average ball.</span>`;
   const kept = r => D.roles[r].sens.filter(s => s.overlap_with_base_top10 >= 8).length + "<span class=\"vs\">/</span>" + D.roles[r].sens.length;
   $("#rob-bigs").innerHTML = `
     <div class="big"><b class="num dbl">${kept("bat")}</b><span><strong>Batters:</strong> changes that keep 8 or more of the top 10</span></div>
@@ -610,7 +626,7 @@ document.addEventListener("click", e => { const b = e.target.closest("[data-name
   rows.forEach(([lab, k], j) => {
     const y = j * rh + 8, hi = k === "output";
     s += `<text x="0" y="${y + 19}" style="fill:var(--ink);font-family:var(--body);font-size:12.5px;font-weight:${hi ? 600 : 400}">${lab}</text>`;
-    [["bat", "var(--accent)", 0], ["bowl", "var(--normal)", 16]].forEach(([r, c, o]) => {
+    [["bat", hi ? "var(--accent)" : "var(--ink)", 0], ["bowl", hi ? "color-mix(in srgb, var(--accent) 55%, transparent)" : "var(--muted)", 16]].forEach(([r, c, o]) => {
       const v = D.roles[r].repeat[k] ?? 0;
       s += `<rect class="grow" style="--i:${i++}" x="${X(0)}" y="${y + o}" width="${Math.max(1, X(Math.max(v, 0)) - X(0))}" height="13" rx="3" fill="${c}"/><text x="${X(Math.max(v, 0)) + 6}" y="${y + o + 11}">${v.toFixed(2)}</text>`;
     });
@@ -801,7 +817,7 @@ function updateScatter(rows, cut, gate, topset) {
   // the 7 changes that move the lists most stay visible; the rest sit in a drawer
   const rows = D.roles.bat.sens.map(s => ({v: s.variant, b: s.overlap_with_base_top10, w: bowl[s.variant]}))
     .sort((x, y) => Math.min(x.b ?? 10, x.w ?? 10) + (x.b ?? 10) + (x.w ?? 10) - (Math.min(y.b ?? 10, y.w ?? 10) + (y.b ?? 10) + (y.w ?? 10)));
-  const row = r => `<div><span>${esc(r.v)}</span>${m(r.b)}${m(r.w)}</div>`, head = `<div class="h"><span>Change</span><span>Batters kept</span><span>Bowlers kept</span></div>`;
+  const row = r => `<div><span>${esc(String(r.v).replace(/^PI>=/, "pressure line at "))}</span>${m(r.b)}${m(r.w)}</div>`, head = `<div class="h"><span>Change</span><span>Batters kept</span><span>Bowlers kept</span></div>`;
   $("#sens").innerHTML = head + rows.slice(0, 7).map(row).join("");
   $("#sens-more").innerHTML = head + rows.slice(7).map(row).join("");
   const f = [...D.roles.bat.forward.map(r => ({...r, role: "Batters"})), ...D.roles.bowl.forward.map(r => ({...r, role: "Bowlers"}))];
@@ -838,7 +854,7 @@ function updateScatter(rows, cut, gate, topset) {
   $("#bt").innerHTML = `<thead><tr><th>Picked by</th><th>Batters</th><th>Bowlers</th></tr></thead><tbody>` +
     order.map(m => `<tr class="${m === "ours" ? "hi" : ""}"><td>${m === "ours" ? "Our method" : esc(m)}</td><td class="n">${cell(bt[m]?.bat)}</td><td class="n">${cell(bt[m]?.bowl)}</td></tr>`).join("") + "</tbody>";
   const sd = bt["random 10 from the pool (average)"];
-  $("#bt-note").textContent = `In brackets: share of 2,000 random sets of 10 that the picks beat. A random 10 varies by about ${Math.round(sd.bat.random_sd)} runs, so ours, pressure-only and usual-form cannot be told apart at this size. Picking the biggest risers, and picking batters on death-overs strike rate, clearly do worse.`;
+  $("#bt-note").textContent = `Our method, pressure-only and usual-form are within a random 10's noise (about ${Math.round(sd.bat.random_sd)} runs) of each other: a tie. Picking the biggest risers, and batters on death-overs strike rate, clearly fall behind. In brackets: share of 2,000 random sets of 10 beaten.`;
 })();
 
 // ---------- limitations
@@ -864,43 +880,49 @@ function openCard(role, name) {
   cur = {role, name};
   const d = D.roles[role].detail[name], v = d && d.pvn, bat = role === "bat", top = TOP(role), idx = top.findIndex(q => q.name === name);
   let i = 0; const pr = (a, b) => `<div class="pair" style="--i:${i++}"><span>${a}</span><b>${b}</b></div>`;
-  let h = `<div class="dlg-h"><div><div class="eyebrow">${bat ? "Batter" : "Bowler"} · ${p.passes_gate ? "passes the pressure gate" : "outside the pressure gate"}</div>
-    <h2 id="d-name">${p.rank <= 10 ? "#" + p.rank + " " : ""}${esc(name)}</h2></div>
+  const CW = Math.round(Math.max(300, Math.min(640, innerWidth - 64)));   // charts drawn at real width so text stays >= 11px
+  const pool = D.roles[role].pool;
+  let h = `<div class="dlg-h"><div><div class="eyebrow">${bat ? "Batter" : "Bowler"} · ${p.passes_gate ? "inside the pressure gate" : "outside the pressure gate"}</div>
+    <h2 id="d-name">${esc(name)}</h2></div>
     <div class="dlg-nav">${idx >= 0 ? `<button class="x" id="d-prev" ${idx === 0 ? "disabled" : ""} aria-label="Previous pick">←</button><button class="x" id="d-next" ${idx === top.length - 1 ? "disabled" : ""} aria-label="Next pick">→</button>` : ""}<button class="x" id="d-x">Close</button></div></div>`;
-  const verdict = p.rank <= 10
-    ? `Picked at #${p.rank}: ${ord(p.A_rank)} of ${D.roles[role].pool} on pressure output, usual level ${sg(p.normal)}. In the top 10 in ${Math.round(100 * p.p_top10)}% of 300 match resamples (${p.band}).`
-    : p.passes_gate ? `Passes the pressure gate but rates ${ord(p.rank)}, just outside the ten.` : `Outside the gate: ${ord(p.A_rank)} of ${D.roles[role].pool} on pressure output, below the top 20% needed to be picked.`;
-  h += `<div class="verdict">${verdict}</div>`;
-  h += `<div class="pairs">${pr("Rating (rank)", `${f1(p.score)} (${p.rank})`)}${pr("Pressure output (rank)", `${sg(p.A)} (${p.A_rank})`)}${pr("Usual level", sg(p.normal))}
-    ${pr("Rank band, 10th-90th", `${p.rank_p10}-${Math.round(p.rank_p90)}`)}${pr("Top 10 in resamples", Math.round(100 * p.p_top10) + "%")}${pr("Pressure balls", Math.round(p.p_balls))}
-    ${bat ? pr("SR pressure / usual", `${f1(p.p_sr)} / ${f1(p.n_sr)}`) + pr("Average pressure / usual", `${f1(p.p_avg)} / ${f1(p.n_avg)}`)
-          : pr("Economy pressure / usual", `${(+p.p_econ).toFixed(2)} / ${(+p.n_econ).toFixed(2)}`) + pr("Balls per wicket pressure / usual", `${f1(p.p_sr)} / ${f1(p.n_sr)}`)}</div>`;
+  h += `<div class="pc-hero"><b class="pc-rk">${p.rank <= 10 ? "#" + p.rank : ord(p.rank)}</b><div><b class="pc-sc">${f1(p.score)}</b>
+    <span>rating · ${p.rank <= 10 ? `${p.band}, top 10 in ${Math.round(100 * p.p_top10)}% of resamples` : p.passes_gate ? "inside the gate, just outside the ten" : `outside the gate: needs top 20% under pressure`}</span></div></div>`;
+  h += `<div class="strip">
+    <div><b class="p">${sg(p.A)}</b><span>pressure output, ${ord(p.A_rank)} of ${pool}</span></div>
+    <div><b>${sg(p.normal)}</b><span>usual level</span></div>
+    <div><b>${Math.round(p.p_balls)}</b><span>pressure balls</span></div>
+    <div><b>${p.rank_p10}-${Math.round(p.rank_p90)}</b><span>rank range in resamples</span></div></div>`;
   if (v) {
-    const lo = Math.min(v.pressure_rv_lo, v.normal_rv_lo, 0), hi = Math.max(v.pressure_rv_hi, v.normal_rv_hi, 0), W = 620, L = 76, R = 24;
+    const lo = Math.min(v.pressure_rv_lo, v.normal_rv_lo, 0), hi = Math.max(v.pressure_rv_hi, v.normal_rv_hi, 0), W = CW, L = 70, R = 24;
     const X = x => L + (W - L - R) * (x - lo) / (hi - lo);
-    let s = `<svg viewBox="0 0 ${W} 96" role="img" aria-label="Runs per 100 balls with 90% ranges"><line class="ax" x1="${X(0)}" x2="${X(0)}" y1="4" y2="74"/><text x="${X(0)}" y="91" text-anchor="middle">0 = average player</text>`;
+    let s = `<svg viewBox="0 0 ${W} 96" style="max-width:${W}px" role="img" aria-label="Runs per 100 balls with 90% ranges"><line class="ax" x1="${X(0)}" x2="${X(0)}" y1="4" y2="74"/><text x="${X(0)}" y="91" text-anchor="middle">0 = average player</text>`;
     [["Pressure", v.pressure_rv_per100, v.pressure_rv_lo, v.pressure_rv_hi, "var(--accent)", 22, 0], ["Usual", v.normal_rv_per100, v.normal_rv_lo, v.normal_rv_hi, "var(--normal)", 56, 1]].forEach(([l, m, a, b, c, y, k]) => {
       s += `<text x="0" y="${y + 4}" style="fill:var(--ink);font-family:var(--body);font-size:12.5px">${l}</text><rect class="grow" style="--i:${k * 2}" x="${X(a)}" y="${y - 3}" width="${X(b) - X(a)}" height="6" rx="3" fill="${c}" fill-opacity=".35"/>
         <circle cx="${X(m)}" cy="${y}" r="7" fill="${c}"/><text x="${X(m)}" y="${y - 11}" text-anchor="middle" style="fill:${c};font-weight:500">${sg(m)}</text>`;
     });
-    h += `<div><h3 style="font-size:16px;margin-bottom:6px">Runs ${bat ? "added" : "saved"} per 100 balls vs an average player in the same spot (90% range)</h3>${s}</svg></div>`;
+    h += `<div><div class="lbl">Runs ${bat ? "added" : "saved"} per 100 balls vs an average player, 90% range</div>${s}</svg></div>`;
   }
   if (d && Object.keys(d.seasons).length) {
-    const ss = Object.entries(d.seasons), mx = Math.max(10, ...ss.map(([, x]) => Math.abs(x ?? 0))), W = 620, H = 120, M = H / 2, bw = W / ss.length;
-    let s = `<svg viewBox="0 0 ${W} ${H + 18}" role="img" aria-label="Pressure run value by season"><line class="ax" x1="0" x2="${W}" y1="${M}" y2="${M}"/>`;
+    const ss = Object.entries(d.seasons), mx = Math.max(10, ...ss.map(([, x]) => Math.abs(x ?? 0))), W = CW, H = 110, M = H / 2, bw = W / ss.length;
+    let s = `<svg viewBox="0 0 ${W} ${H + 18}" style="max-width:${W}px" role="img" aria-label="Pressure run value by season"><line class="ax" x1="0" x2="${W}" y1="${M}" y2="${M}"/>`;
     ss.forEach(([y, x], k) => { const cx = k * bw + bw / 2;
-      if (x != null) { const hgt = (M - 14) * Math.abs(x) / mx; s += `<rect x="${cx - bw * .28}" y="${x >= 0 ? M - hgt : M}" width="${bw * .56}" height="${Math.max(hgt, 1)}" rx="3" fill="${x >= 0 ? "var(--accent)" : "var(--normal)"}"
+      if (x != null) { const hgt = (M - 14) * Math.abs(x) / mx; s += `<rect x="${cx - bw * .28}" y="${x >= 0 ? M - hgt : M}" width="${bw * .56}" height="${Math.max(hgt, 1)}" rx="2" fill="${x >= 0 ? "var(--accent)" : "var(--normal)"}"
         style="transform-box:fill-box;transform-origin:${x >= 0 ? "bottom" : "top"};${RM ? "" : `animation:sy .6s var(--ease) ${k * 70}ms both`}"/><text x="${cx}" y="${x >= 0 ? M - hgt - 4 : M + hgt + 12}" text-anchor="middle">${sg(x)}</text>`; }
       else s += `<text x="${cx}" y="${M - 4}" text-anchor="middle">–</text>`;
       s += `<text x="${cx}" y="${H + 14}" text-anchor="middle" style="fill:var(--ink)">${y}</text>`; });
-    h += `<div><h3 style="font-size:16px;margin-bottom:6px">Season by season, pressure balls (– = under 10 balls)</h3>${s}</svg></div>`;
+    h += `<div><div class="lbl">Season by season, pressure balls (– = under 10 balls)</div>${s}</svg></div>`;
   }
+  const more = [];
+  more.push(bat ? pr("Strike rate, pressure / usual", `${f1(p.p_sr)} / ${f1(p.n_sr)}`) + pr("Average, pressure / usual", `${f1(p.p_avg)} / ${f1(p.n_avg)}`)
+               : pr("Economy, pressure / usual", `${(+p.p_econ).toFixed(2)} / ${(+p.n_econ).toFixed(2)}`) + pr("Balls per wicket, pressure / usual", `${f1(p.p_sr)} / ${f1(p.n_sr)}`));
   if (d && d.split.length) {
     const g = c => d.split.find(s => s.competition === c && s.situation === "pressure");
-    h += `<div class="pairs">` + ["IPL", "T20I"].map(c => { const s = g(c); return pr(`${c} pressure: runs per 100 (balls)`, s ? `${sg(s.rv_per100)} (${s.balls})` : "–"); }).join("") + "</div>";
+    more.push(["IPL", "T20I"].map(c => { const s = g(c); return pr(`${c} pressure, runs per 100 (balls)`, s ? `${sg(s.rv_per100)} (${s.balls})` : "–"); }).join(""));
   }
-  if (d && d.model) h += `<p class="muted small">Rank under each win-model version: fits 1-8 → ${d.model.rank_models_A ?? "–"}, fits 9-16 → ${d.model.rank_models_B ?? "–"}, a second independent 16-fit model → ${d.model.rank_second_16fit ?? "–"}.</p>`;
-  if (!d) h += `<p class="muted small">Full evidence cards are kept for the 20 picks; this player's numbers come from the ranking table.</p>`;
+  let tail = `<div class="pairs">${more.join("")}</div>`;
+  if (d && d.model) tail += `<p class="muted small">Rank under three versions of the win model: ${d.model.rank_models_A ?? "–"}, ${d.model.rank_models_B ?? "–"} and ${d.model.rank_second_16fit ?? "–"}.</p>`;
+  if (!d) tail += `<p class="muted small">Full evidence cards are kept for the 20 picks; these numbers come from the ranking table.</p>`;
+  h += `<details class="more"><summary>Strike rate, splits and model checks</summary><div class="in">${tail}</div></details>`;
   $("#dlg-c").innerHTML = h;
   $("#d-x").onclick = () => $("#dlg").close();
   if ($("#d-prev")) { $("#d-prev").onclick = () => step(-1); $("#d-next").onclick = () => step(1); }
@@ -929,11 +951,17 @@ document.head.insertAdjacentHTML("beforeend", "<style>@keyframes sy{from{transfo
   document.addEventListener("click", e => { if (!e.target.closest(".find")) hits.hidden = true; });
 })();
 
+// ---------- phone section picker
+(function () {
+  const cs = $("#cursec"); if (!cs) return;
+  cs.innerHTML = [...document.querySelectorAll("#links a")].map(a => `<option value="${a.getAttribute("href")}">${esc(a.textContent)}</option>`).join("");
+  cs.addEventListener("change", () => document.querySelector(cs.value)?.scrollIntoView({behavior: RM ? "auto" : "smooth"}));
+})();
 // ---------- scroll-spy
 (function () {
   const links = [...document.querySelectorAll("#links a")], map = new Map(links.map(a => [a.getAttribute("href").slice(1), a]));
   if (!("IntersectionObserver" in window)) return;
-  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.remove("on")); const a = map.get(e.target.id); if (a) { a.classList.add("on"); a.parentElement.scrollTo({left: Math.max(0, a.offsetLeft - 24), behavior: RM ? "auto" : "smooth"}); } } }),
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { links.forEach(a => a.classList.remove("on")); const a = map.get(e.target.id); if (a) { a.classList.add("on"); const cs = $("#cursec"); if (cs) cs.value = a.getAttribute("href"); a.parentElement.scrollTo({left: Math.max(0, a.offsetLeft - 24), behavior: RM ? "auto" : "smooth"}); } } }),
     {rootMargin: "-40% 0px -55% 0px"});
   map.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
 })();
@@ -999,17 +1027,20 @@ presets(); buildScatter(); lab();
   const T = D.terrain, stage = $("#stage");
   let peak = {v: -1};
   T.pi.forEach((row, i) => row.forEach((v, j) => { if (v != null && T.n[i][j] >= 30 && v > peak.v) peak = {v, i, j}; }));
-  $("#f-peak").textContent = `PI ${peak.v.toFixed(1)}`;
-  $("#f-peak-t").textContent = `peak: needing ${T.rows[peak.i]} an over with ${T.cols[peak.j]} overs left`;
+  $("#f-peak").textContent = `${peak.v.toFixed(1)}×`;
+  $("#f-peak-t").textContent = `the swing of an average ball, needing ${T.rows[peak.i]} an over with ${T.cols[peak.j]} overs left`;
   $("#f-share").textContent = `${T.share_hp}%`;
   const maxPI = Math.max(...T.pi.flat().filter(v => v != null));
-  $("#f-max").textContent = `PI ${maxPI.toFixed(1)}`;
+  $("#f-max").textContent = `${maxPI.toFixed(1)}×`;
   const gl = (() => { try { const c = document.createElement("canvas"); return !!(c.getContext("webgl2") || c.getContext("webgl")); } catch (e) { return false; } })();
-  const fail = () => { stage.classList.add("no3d"); stage.textContent = "The 3D view needs WebGL. The same grid is shown flat under Pressure line."; };
+  let built = false;
+  const fail = () => { if (built) return; stage.classList.add("no3d"); stage.textContent = "The 3D view could not load here. The same grid is shown flat under Pressure line."; };
   if (!gl) return fail();
   let started = false;
   const go = () => { if (started) return; started = true;
-    import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(build).catch(fail); };
+    setTimeout(fail, 9000);   // offline or blocked: say so instead of an empty glow
+    import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js").then(T3 => { if (!stage.classList.contains("no3d")) { built = true; build(T3); } }).catch(fail); };
+  (window.requestIdleCallback || (f => setTimeout(f, 1200)))(go, {timeout: 2500});   // fetch early so the towers are ready on arrival
   if ("IntersectionObserver" in window) {
     const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { go(); io.disconnect(); } }, {rootMargin: "300px"});
     io.observe(stage);
@@ -1048,9 +1079,9 @@ presets(); buildScatter(); lab();
     floor.material.transparent = true; floor.material.opacity = 0.35; scene.add(floor);
 
     function paint() {
-      const surf = new THREE.Color(css("--surface")), soft = new THREE.Color(css("--soft")), acc = new THREE.Color(css("--accent")), nor = new THREE.Color(css("--normal"));
+      const surf = new THREE.Color(css("--bg")), soft = new THREE.Color(css("--soft")), acc = new THREE.Color(css("--accent")), nor = new THREE.Color(css("--normal"));
       bars.forEach(b => { const k = Math.pow(Math.min(1, b.userData.v / maxPI), 0.75);
-        b.material.color.copy(b.userData.v < 1.5 ? surf.clone().lerp(nor, 0.35 + 0.45 * k) : surf.clone().lerp(acc, 0.45 + 0.55 * k));
+        b.material.color.copy(b.userData.v < 1.5 ? surf.clone().lerp(nor, 0.72 + 0.23 * k) : surf.clone().lerp(acc, 0.62 + 0.38 * k));
         b.userData.base = b.material.color.clone(); });
       plane.material.color.copy(acc); edge.material.color.copy(acc);
       floor.material.color = new THREE.Color(css("--line"));
@@ -1065,8 +1096,8 @@ presets(); buildScatter(); lab();
     T.rows.forEach((r, i) => labels.push({el: lab(r), p: new THREE.Vector3(cx + S * 1.05, 0, i * S - cz)}));
     labels.push({el: lab("overs left", "t"), p: new THREE.Vector3(0, 0, -cz - S * 1.8)});
     labels.push({el: lab("required rate", "t"), p: new THREE.Vector3(cx + S * 2.2, 0, 0)});
-    labels.push({el: lab("pressure line", "t"), p: new THREE.Vector3(cx + S * 0.9, 1.5 * H + 0.2, cz + S * 0.4)});
-    labels.push({el: lab(`peak ${peak.v.toFixed(1)}`, "pk"), p: new THREE.Vector3(peak.j * S - cx, peak.v * H + 0.45, peak.i * S - cz)});
+    labels.push({el: lab("pressure line", "t"), p: new THREE.Vector3(cx + S * 1.3, 1.5 * H + 0.75, cz + S * 0.4)});
+    labels.push({el: lab(`${peak.v.toFixed(1)}×`, "pk"), p: new THREE.Vector3(peak.j * S - cx, peak.v * H + 0.45, peak.i * S - cz)});
     const tip = document.createElement("div"); tip.className = "tip3"; stage.appendChild(tip);
     const hint = document.createElement("div"); hint.className = "hint3"; hint.textContent = matchMedia("(hover: none)").matches ? "drag to turn · tap a tower" : "drag to turn"; stage.appendChild(hint);
 
@@ -1077,7 +1108,7 @@ presets(); buildScatter(); lab();
     let narrow = false;
     function size() { const r = stage.getBoundingClientRect(); w = r.width; h = r.height; narrow = w < 560; hint.hidden = narrow; renderer.setSize(w, h, false);
       camera.aspect = w / h; camera.updateProjectionMatrix(); R = R0 * Math.pow(Math.max(1, 1.2 / camera.aspect), 0.8); }
-    new ResizeObserver(size).observe(stage); size();
+    new ResizeObserver(() => { size(); if (RM) requestAnimationFrame(frame); }).observe(stage); size();
     stage.addEventListener("pointerdown", e => { drag = {x: e.clientX, y: e.clientY, t: theta, p: phi}; stage.classList.add("drag"); stage.setPointerCapture(e.pointerId); hint.style.opacity = 0; });
     const endDrag = e => { const tap = drag && e && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6; drag = null; stage.classList.remove("drag");
       if (tap) stage.dispatchEvent(new PointerEvent("pointermove", {clientX: e.clientX, clientY: e.clientY})); };
@@ -1113,7 +1144,7 @@ presets(); buildScatter(); lab();
       camera.lookAt(target);
       renderer.render(scene, camera);
       labels.forEach(l => { v3.copy(l.p).project(camera);
-        l.el.style.left = ((v3.x + 1) / 2 * w) + "px"; l.el.style.top = ((1 - v3.y) / 2 * h) + "px"; l.el.style.opacity = v3.z < 1 && !(narrow && l.el.classList.contains("t")) ? 1 : 0; });
+        l.el.style.left = Math.min(w - 26, Math.max(26, (v3.x + 1) / 2 * w)) + "px"; l.el.style.top = Math.min(h - 12, Math.max(10, (1 - v3.y) / 2 * h)) + "px"; l.el.style.opacity = v3.z < 1 && !(narrow && l.el.classList.contains("t")) ? 1 : 0; });
     }
     let raf = 0;
     function loop() { cancelAnimationFrame(raf); const tick = now => { frame(now); if (visible && (!RM || drag)) raf = requestAnimationFrame(tick); }; raf = requestAnimationFrame(tick); }
