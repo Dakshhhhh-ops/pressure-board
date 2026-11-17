@@ -13,7 +13,7 @@
   --display: "Barlow Condensed", "Arial Narrow", "Segoe UI", sans-serif;
   --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
-  --ease: cubic-bezier(.2,.8,.2,1);
+  --ease: cubic-bezier(.16,1,.3,1); --r: 3px; --glow: color-mix(in srgb, var(--accent) 22%, transparent);
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #0d0e1b; --surface: #15172b; --ink: #ecebf5; --muted: #a1a3bc; --line: #292c47; --soft: #1c1f36;
@@ -49,19 +49,20 @@ p { margin: 0; max-width: 68ch; }
 .brand b { color: var(--accent); }
 .links { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; flex: 1; min-width: 0; }
 .links::-webkit-scrollbar { display: none; }
-.links a { color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 6px 10px; border-radius: 6px; white-space: nowrap; transition: color .2s, background .2s; }
+.links a { color: var(--muted); text-decoration: none; font-size: 13.5px; font-weight: 500; padding: 6px 10px; border-radius: var(--r); white-space: nowrap; transition: color .2s, background .2s; }
 .links a:hover { color: var(--ink); background: var(--soft); }
 .links a.on { color: var(--accent); background: var(--accent-soft); }
 .find { position: relative; flex: 0 1 220px; min-width: 120px; }
-.find input { width: 100%; font: 14px var(--body); padding: 7px 10px 7px 30px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
+.find input { width: 100%; font: 14px var(--body); padding: 7px 10px 7px 30px; border-radius: var(--r); border: 1px solid var(--line); background: var(--bg); color: var(--ink); }
 .find input:focus { outline: 2px solid var(--accent); outline-offset: 0; border-color: transparent; }
 .find svg { position: absolute; left: 9px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; }
 .find svg * { stroke: var(--muted); fill: none; stroke-width: 2; }
-.hits { position: absolute; top: calc(100% + 6px); right: 0; width: min(300px, 80vw); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: var(--shadow); padding: 4px; display: grid; max-height: 320px; overflow-y: auto; }
-.hits button { text-align: left; font: 14px var(--body); border: 0; background: none; color: var(--ink); padding: 7px 9px; border-radius: 5px; cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
+.hits { position: absolute; top: calc(100% + 6px); right: 0; width: min(300px, 80vw); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--shadow); padding: 4px; display: grid; max-height: 320px; overflow-y: auto; }
+.hits button { text-align: left; font: 14px var(--body); border: 0; background: none; color: var(--ink); padding: 7px 9px; border-radius: var(--r); cursor: pointer; display: flex; justify-content: space-between; gap: 8px; }
 .hits button:hover, .hits button.sel { background: var(--soft); }
 .hits small { color: var(--muted); font-family: var(--mono); font-size: 11.5px; }
-@media (max-width: 640px) { .brand { display: none; } }
+.links { -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent); mask-image: linear-gradient(90deg, #000 88%, transparent); }
+@media (max-width: 640px) { .brand { font-size: 16px; } .find { flex: 0 1 104px; min-width: 88px; } .find input { padding-left: 26px; } }
 
 /* hero */
 header.top { padding-block: 44px 0; display: grid; gap: 20px; }
@@ -71,23 +72,23 @@ header.top { padding-block: 44px 0; display: grid; gap: 20px; }
 .def b { color: var(--accent); }
 .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 @media (max-width: 520px) { .stats { grid-template-columns: 1fr; } }
-.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 8px; justify-items: start; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 14px; display: grid; gap: 8px; justify-items: start; }
 .stat svg { width: 64px; height: 64px; }
 .ring-bg { stroke: var(--soft); } .ring { stroke: var(--accent); transition: stroke-dashoffset 1.2s var(--ease); }
 .stat b { font-family: var(--display); font-size: 34px; line-height: 1; }
 .stat span { font-size: 13px; color: var(--muted); line-height: 1.35; }
 .lev { display: grid; gap: 5px; width: 100%; padding-block: 6px; }
-.lev i { display: block; height: 10px; border-radius: 5px; transform-origin: left; transition: transform 1.2s var(--ease); }
+.lev i { display: block; height: 10px; border-radius: var(--r); transform-origin: left; transition: transform 1.2s var(--ease); }
 
 section { display: grid; gap: 16px; }
 .sec-h { display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; }
-.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 20px; min-width: 0; }
 .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 16px; }
 
 /* lists */
 .board { display: grid; gap: 2px; }
 .row { display: grid; grid-template-columns: 38px minmax(0, 1fr) 96px 78px; gap: 12px; align-items: center;
-  padding: 8px 10px; border-radius: 8px; cursor: pointer; border: 0; background: none; color: inherit; font: inherit; text-align: left; width: 100%;
+  padding: 8px 10px; border-radius: var(--r); cursor: pointer; border: 0; background: none; color: inherit; font: inherit; text-align: left; width: 100%;
   transition: background .2s, transform .2s var(--ease); animation: rise .5s var(--ease) backwards; animation-delay: calc(var(--i) * 45ms); }
 .row:hover { background: var(--soft); transform: translateX(3px); }
 .row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
@@ -98,17 +99,17 @@ section { display: grid; gap: 16px; }
 .bar { height: 8px; background: var(--soft); border-radius: 4px; overflow: hidden; }
 .bar i { display: block; height: 100%; width: 100%; background: var(--accent); border-radius: 4px; transform-origin: left; transform: scaleX(var(--w, 1)); transition: transform .9s var(--ease); }
 .pre .bar i { transform: scaleX(0); }
-.chip { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 10px; border: 1px solid currentColor; justify-self: start; white-space: nowrap; }
-.chip.firm { color: var(--firm); } .chip.likely { color: var(--likely); } .chip.near-tie { color: var(--near); }
+.chip { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: var(--r); border: 1px solid currentColor; justify-self: start; white-space: nowrap; }
+.chip.firm { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); } .chip.likely { color: var(--accent); } .chip.near-tie { color: var(--muted); }
 .board-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
 .hint { font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
 .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 16px; border-radius: 0 8px 8px 0; display: grid; gap: 8px; }
 
 /* segmented control */
-.seg { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--line); border-radius: 9px; padding: 3px; background: var(--soft); }
-.seg::before { content: ""; position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / var(--n, 2)); border-radius: 6px; background: var(--accent);
+.seg { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; border: 1px solid var(--line); border-radius: var(--r); padding: 3px; background: var(--soft); }
+.seg::before { content: ""; position: absolute; top: 3px; bottom: 3px; left: 3px; width: calc((100% - 6px) / var(--n, 2)); border-radius: var(--r); background: var(--accent);
   transform: translateX(calc(var(--k, 0) * 100%)); transition: transform .35s var(--ease); box-shadow: 0 2px 8px -2px color-mix(in srgb, var(--accent) 60%, transparent); }
-.seg button { position: relative; font: 600 13.5px var(--body); padding: 6px 14px; border: 0; background: none; color: var(--muted); cursor: pointer; border-radius: 6px; transition: color .25s; white-space: nowrap; }
+.seg button { position: relative; font: 600 13.5px var(--body); padding: 6px 14px; border: 0; background: none; color: var(--muted); cursor: pointer; border-radius: var(--r); transition: color .25s; white-space: nowrap; }
 .seg button[aria-pressed="true"] { color: var(--accent-ink); }
 .seg button:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 
@@ -126,7 +127,7 @@ input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 
 input[type=range]:active::-webkit-slider-thumb { transform: scale(1.2); }
 input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 .presets { display: flex; flex-wrap: wrap; gap: 6px; }
-.presets button { font: 500 12px var(--mono); padding: 5px 9px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; transition: border-color .2s, background .2s, transform .15s; }
+.presets button { font: 500 12px var(--mono); padding: 5px 9px; border-radius: var(--r); border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; transition: border-color .2s, background .2s, transform .15s; }
 .presets button:hover { border-color: var(--accent); transform: translateY(-1px); }
 .presets button.on { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); }
 .presets button:focus-visible { outline: 2px solid var(--accent); }
@@ -137,12 +138,12 @@ input[type=range]:focus-visible { outline: 2px solid var(--accent); outline-offs
 .segs i { height: 8px; border-radius: 2px; background: var(--soft); transition: background .35s; transition-delay: calc(var(--i) * 25ms); }
 .segs i.on { background: var(--accent); }
 .wi { display: grid; gap: 3px; font-size: 14px; }
-.wi > div { display: grid; grid-template-columns: 26px minmax(0, 1fr) 52px 44px; gap: 8px; align-items: center; padding: 5px 8px; border-radius: 6px; background: var(--surface); cursor: pointer; }
+.wi > div { display: grid; grid-template-columns: 26px minmax(0, 1fr) 52px 44px; gap: 8px; align-items: center; padding: 5px 8px; border-radius: var(--r); background: var(--surface); cursor: pointer; }
 .wi > div:hover { background: var(--soft); }
 .wi > div.new { background: var(--accent-soft); }
 .wi .nr { font-family: var(--display); font-size: 18px; color: var(--accent); text-align: right; }
 .mv { font-family: var(--mono); font-size: 12px; text-align: right; }
-.mv.up { color: var(--firm); } .mv.dn { color: var(--near); }
+.mv.up { color: var(--accent); } .mv.dn { color: var(--muted); }
 
 /* charts */
 svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -158,10 +159,11 @@ svg .ax { stroke: var(--line); }
 .pt text { opacity: 0; transition: opacity .3s; fill: var(--ink); font-family: var(--body); font-size: 11px; pointer-events: none; paint-order: stroke; stroke: var(--surface); stroke-width: 3px; }
 .pt.top text { opacity: 1; }
 .gate { transition: transform .6s var(--ease), opacity .3s; }
-.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12.5px; padding: 7px 10px; border-radius: 7px; white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); opacity: 0; transition: opacity .15s; z-index: 5; }
+.tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 12.5px; padding: 7px 10px; border-radius: var(--r); white-space: nowrap; transform: translate(-50%, calc(-100% - 12px)); opacity: 0; transition: opacity .15s; z-index: 5; }
 .tip.on { opacity: 1; }
 .tip b { display: block; font-size: 13px; }
 .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); }
+.legend .sz::before { background: transparent !important; border: 1.5px solid var(--muted); }
 .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; background: var(--c); }
 .draw { stroke-dasharray: var(--len); stroke-dashoffset: 0; animation: draw 1.4s var(--ease) both; }
 @keyframes draw { from { stroke-dashoffset: var(--len); } }
@@ -175,13 +177,13 @@ td.n { text-align: right; font-family: var(--mono); font-variant-numeric: tabula
 tbody tr { transition: background .2s; } tbody tr:hover { background: var(--soft); }
 tr.hi td { background: var(--accent-soft); font-weight: 600; }
 .sens { display: grid; gap: 3px; font-size: 13px; }
-.sens > div { display: grid; grid-template-columns: minmax(0, 1fr) 120px 120px; gap: 10px; align-items: center; padding: 4px 6px; border-radius: 5px; }
+.sens > div { display: grid; grid-template-columns: minmax(0, 1fr) 120px 120px; gap: 10px; align-items: center; padding: 4px 6px; border-radius: var(--r); }
 .sens > div:not(.h):hover { background: var(--soft); }
 .sens .h { color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: .05em; }
 .mini { display: flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 12px; }
 .mini .bar { flex: 1; }
 .heat { display: grid; grid-template-columns: 96px repeat(3, minmax(0, 1fr)); gap: 5px; font-size: 13px; }
-.heat div { padding: 14px 6px; border-radius: 6px; text-align: center; }
+.heat div { padding: 14px 6px; border-radius: var(--r); text-align: center; }
 .heat .cell { animation: pop .5s var(--ease) backwards; animation-delay: calc(var(--i) * 60ms); transition: transform .2s; }
 .heat .cell:hover { transform: scale(1.05); }
 @keyframes pop { from { transform: scale(.85); } }
@@ -189,7 +191,7 @@ tr.hi td { background: var(--accent-soft); font-weight: 600; }
 ul.lim { margin: 0; padding-left: 18px; display: grid; gap: 8px; max-width: 82ch; }
 
 /* card */
-dialog { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--ink); width: min(740px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 0; box-shadow: var(--shadow); }
+dialog { border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); color: var(--ink); width: min(740px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 0; box-shadow: var(--shadow); }
 dialog[open] { animation: card .3s var(--ease); }
 @keyframes card { from { transform: translateY(14px) scale(.98); opacity: .4; } }
 dialog::backdrop { background: rgba(8, 8, 20, .55); backdrop-filter: blur(2px); }
@@ -197,16 +199,16 @@ dialog::backdrop { background: rgba(8, 8, 20, .55); backdrop-filter: blur(2px); 
 .dlg-h { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
 .dlg-h h2 { font-size: clamp(28px, 5vw, 40px); }
 .dlg-nav { display: flex; gap: 6px; }
-.x { font: 600 13px var(--body); border: 1px solid var(--line); background: var(--soft); color: var(--ink); border-radius: 8px; padding: 6px 11px; cursor: pointer; transition: border-color .2s; }
+.x { font: 600 13px var(--body); border: 1px solid var(--line); background: var(--soft); color: var(--ink); border-radius: var(--r); padding: 6px 11px; cursor: pointer; transition: border-color .2s; }
 .x:hover { border-color: var(--accent); } .x:disabled { opacity: .4; cursor: default; }
 .x:focus-visible { outline: 2px solid var(--accent); }
-.pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
-.pair { background: var(--soft); border-radius: 8px; padding: 9px 11px; animation: rise .4s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 35ms); }
+.pairs { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; }
+.pair { background: var(--soft); border-radius: var(--r); padding: 9px 11px; animation: rise .4s var(--ease) backwards; animation-delay: calc(var(--i, 0) * 35ms); }
 .pair span { display: block; font-size: 12px; color: var(--muted); }
 .pair b { font-family: var(--mono); font-size: 17px; font-weight: 500; }
-.verdict { font-size: 15px; padding: 12px 14px; border-radius: 8px; background: var(--normal-soft); }
+.verdict { font-size: 15px; padding: 12px 14px; border-radius: var(--r); background: var(--normal-soft); }
 footer { font-size: 13px; color: var(--muted); }
-@media (max-width: 520px) { .row { grid-template-columns: 30px minmax(0, 1fr) 60px; } .row .chip { display: none; }
+@media (max-width: 520px) { .row { grid-template-columns: 30px minmax(0, 1fr) 52px 12px; } .row .chip { font-size: 0; width: 10px; height: 10px; padding: 0; border-radius: 50%; border-width: 1.5px; }
   .sens > div { grid-template-columns: minmax(0, 1fr) 70px 70px; } .heat { grid-template-columns: 74px repeat(3, minmax(0, 1fr)); } }
 
 /* scroll progress, under the rail */
@@ -215,11 +217,12 @@ footer { font-size: 13px; color: var(--muted); }
 /* 3D pressure landscape */
 .land { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: 16px; }
 @media (max-width: 860px) { .land { grid-template-columns: 1fr; } }
-.stage { position: relative; height: clamp(320px, 52vw, 500px); border-radius: 12px; overflow: hidden; touch-action: pan-y;
-  background: radial-gradient(120% 90% at 50% 0%, var(--soft), var(--surface) 70%); border: 1px solid var(--line); cursor: grab; }
+.stage { position: relative; height: clamp(380px, 72vh, 700px); overflow: hidden; touch-action: pan-y; cursor: grab;
+  background: radial-gradient(60% 55% at 60% 45%, var(--glow), transparent 70%); }
+.stage .axis3.pk { color: var(--accent); font-size: 13px; font-weight: 600; }
 .stage.drag { cursor: grabbing; }
 .stage canvas { display: block; width: 100%; height: 100%; }
-.stage .tip3 { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); border-radius: 8px;
+.stage .tip3 { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r);
   padding: 8px 10px; font-size: 13px; box-shadow: var(--shadow); opacity: 0; transform: translate(-50%, calc(-100% - 12px)); transition: opacity .15s; white-space: nowrap; }
 .stage .tip3.on { opacity: 1; }
 .stage .hint3 { position: absolute; left: 12px; bottom: 10px; font: 12px var(--mono); color: var(--muted); pointer-events: none; }
@@ -233,9 +236,98 @@ footer { font-size: 13px; color: var(--muted); }
 .fact b { font: 600 22px var(--mono); display: block; }
 
 /* scroll reveal + tilt (only when motion is allowed and JS runs) */
-.anim .rv { opacity: 0; transform: perspective(1200px) translateY(28px) rotateX(7deg); transform-origin: 50% 100%;
-  transition: opacity .7s var(--ease), transform .8s var(--ease); transition-delay: calc(var(--d, 0) * 90ms); }
-.anim .rv.in { opacity: 1; transform: none; }
+/* broadcast wipe: blocks cut in left to right, once */
+.anim .rv { clip-path: inset(0 100% 0 0); transition: clip-path .55s var(--ease); transition-delay: calc(var(--d, 0) * 80ms); }
+.anim .rv.in { clip-path: inset(0 0 0 0); }
+
+/* ---------- "Under the lights" ---------- */
+.wrap { gap: clamp(56px, 9vw, 104px); }
+header.top { position: relative; padding-block: clamp(40px, 7vw, 88px) 0; }
+header.top::before { content: ""; position: absolute; z-index: -1; inset: -120px -30vw auto; height: 720px; pointer-events: none;
+  background: radial-gradient(42% 60% at 50% 0%, var(--glow), transparent 70%), radial-gradient(18% 30% at 50% 0%, color-mix(in srgb, #fff 9%, transparent), transparent 70%); }
+.anim header.top::before { animation: flood 2.2s var(--ease) both; }
+@keyframes flood { 0% { opacity: 0; transform: translateX(-12%) scaleX(.6); } 35% { opacity: .5; } 60% { opacity: 1; } 100% { opacity: 1; transform: none; } }
+h1.slam { font-size: clamp(56px, 12.5vw, 150px); line-height: .86; letter-spacing: -.005em; }
+h1.slam span { display: block; }
+.kicker { font: 500 12px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.kicker i { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--glow); }
+.lede { font-size: 17px; color: var(--muted); max-width: 46ch; }
+.lede b { color: var(--ink); font-weight: 600; }
+
+/* split-flap scoreboard */
+.board3 { display: grid; gap: 6px; background: color-mix(in srgb, var(--ink) 92%, var(--bg)); color: var(--bg); padding: 14px; border-radius: var(--r); box-shadow: 0 30px 80px -40px var(--glow); }
+:root:not([data-theme="light"]) .board3 { background: #05060c; color: #f3f2fa; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .board3 { background: #0d0e1b; color: #f3f2fa; } }
+.brow { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "tag tag" "flap sc"; gap: 4px 12px; align-items: center; cursor: pointer; border: 0; background: none; color: inherit; padding: 0; text-align: left; font: inherit; }
+.brow:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.brow .tag { grid-area: tag; font: 500 11px var(--mono); letter-spacing: .14em; color: #ff4f93; }
+.brow .sc { grid-area: sc; }
+.brow + .brow { margin-top: 10px; }
+.flap { grid-area: flap; display: flex; flex-wrap: nowrap; gap: 2px; min-width: 0; }
+.flap span { display: inline-grid; place-items: center; flex: 0 1 26px; min-width: 0; aspect-ratio: 26 / 38; background: #171a2c;
+  border-radius: 2px; font: 700 clamp(14px, 2vw, 26px) var(--display); text-transform: uppercase; position: relative; overflow: hidden; color: #f3f2fa; }
+.flap span::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(0,0,0,.65); }
+.flap span.sp { background: transparent; }
+.brow .sc { font: 500 clamp(18px, 2.4vw, 28px) var(--mono); color: #ff4f93; font-variant-numeric: tabular-nums; }
+
+/* label/value stat strip */
+.strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); border-top: 1px solid var(--line); }
+.strip > div { padding: 16px 16px 4px 0; display: grid; gap: 4px; align-content: start; }
+.strip > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.strip b { font: 700 clamp(34px, 4.6vw, 54px) / 1 var(--display); font-variant-numeric: tabular-nums; }
+.strip b.p { color: var(--accent); }
+.strip span { font-size: 13px; color: var(--muted); line-height: 1.35; max-width: 24ch; }
+@media (max-width: 520px) { .strip > div + div { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); } }
+
+/* one claim, one number */
+.claim { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(20px, 4vw, 56px); align-items: end; }
+@media (max-width: 860px) { .claim { grid-template-columns: 1fr; } }
+.claim h2 { font-size: clamp(34px, 5.4vw, 64px); line-height: .95; }
+.claim p { color: var(--muted); font-size: 16px; max-width: 44ch; margin-top: 12px; }
+.bigs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 2px; }
+.big { padding: 18px 18px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); display: grid; gap: 6px; align-content: start; }
+.big.p { background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 16%, var(--surface)), var(--surface) 70%); border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.big b { font: 700 clamp(56px, 8vw, 112px) / .9 var(--display); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.big.p b { color: var(--accent); }
+.big .vs { font-size: .45em; color: var(--muted); margin: 0 .15em; }
+.bigs.flat .big { background: none; border: 0; border-left: 1px solid var(--line); border-radius: 0; padding: 4px 0 4px 18px; }
+.bigs.flat .big.p b { color: var(--accent); }
+.mega { display: grid; justify-items: start; gap: 8px; }
+.mega b { font: 700 clamp(140px, 24vw, 300px) / .78 var(--display); color: var(--accent); letter-spacing: -.02em; text-shadow: 0 0 60px var(--glow); }
+.mega span { color: var(--muted); font-size: 15px; max-width: 34ch; }
+.mega span strong { color: var(--ink); }
+.score4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.score4 > div { padding: 22px 18px 18px; display: grid; gap: 8px; align-content: start; }
+.score4 > div + div { border-left: 1px solid var(--line); }
+.score4 b { font: 700 clamp(52px, 7vw, 104px) / .9 var(--display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.score4 b.p { color: var(--accent); }
+.score4 b .vs { font-size: .42em; color: var(--muted); margin: 0 .12em; }
+.score4 span { font-size: 13.5px; color: var(--muted); line-height: 1.35; }
+@media (max-width: 860px) { .score4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .score4 > div:nth-child(3) { border-left: 0; } .score4 > div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.big b.dbl { font-size: clamp(38px, 4vw, 58px); white-space: nowrap; }
+.big span { font-size: 14px; color: var(--muted); max-width: 30ch; line-height: 1.4; }
+.big span strong { color: var(--ink); font-weight: 600; }
+
+/* evidence drawer */
+details.more { border-top: 1px solid var(--line); }
+details.more > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 12px 2px; font: 500 12.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); transition: color .16s; }
+details.more > summary::-webkit-details-marker { display: none; }
+details.more > summary::after { content: "+"; font: 400 22px/1 var(--mono); color: var(--accent); transition: transform .45s var(--ease); }
+details.more[open] > summary::after { transform: rotate(45deg); }
+details.more > summary:hover { color: var(--ink); }
+details.more > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+details.more > .in { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; padding: 4px 0 18px; }
+.wrap > *, section > *, details.more, details.more > .in > * { min-width: 0; }
+.gut:not(.rail) { overflow-x: clip; }   /* the floodlight bloom spills past the edges; clip it here, not on body (body overflow passes to the viewport) */
+details.more[open] > .in { animation: drop .45s var(--ease); }
+@keyframes drop { from { opacity: 0; transform: translateY(-6px); } }
+.big details.more { margin-top: 8px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 2px; }
+.tile { padding: 16px; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); display: grid; gap: 6px; align-content: start; }
+.tile small { font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.tile b { font: 700 clamp(30px, 3.6vw, 42px) / 1 var(--display); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 13px; color: var(--muted); line-height: 1.4; }
 .anim .tilt { transition: transform .35s var(--ease), box-shadow .35s var(--ease); will-change: transform; }
 .anim .tilt.hov { transition: transform .08s linear, box-shadow .35s var(--ease); box-shadow: var(--shadow); }
 .anim h1 { will-change: transform; }
@@ -253,91 +345,90 @@ footer { font-size: 13px; color: var(--muted); }
 
 <div class="gut"><div class="wrap">
   <header class="top">
-    <div class="eyebrow">SupeRR Selector Season 2 · Round 1 · IPL + T20I, 2022 onwards</div>
+    <div class="kicker"><i></i>SupeRR Selector S2 · Round 1 · IPL + T20I since 2022</div>
     <div class="hero">
-      <div style="display:grid;gap:18px">
-        <h1>Who delivers when the <em>game is on the line</em></h1>
-        <p class="def">A ball is a <b>pressure ball</b> when its possible outcomes (dot, single, boundary, wicket) can swing the batting
-          side's chance of winning by at least 1.5 times as much as an average ball. We rank who produces the most on those balls,
-          against an average player facing the same balls.</p>
+      <div style="display:grid;gap:22px">
+        <h1 class="slam"><span>Who holds</span><span>their <em>nerve</em></span></h1>
+        <p class="lede">The <b>10 batters</b> and <b>10 bowlers</b> who produce the most when one ball can swing the match.</p>
       </div>
-      <div class="stats" id="stats"></div>
+      <div class="board3" id="flapboard" aria-label="Number one picks"></div>
     </div>
+    <div class="strip" id="stats"></div>
+    <details class="more"><summary>What counts as a pressure ball</summary><div class="in">
+      <p>A ball is a <b>pressure ball</b> when its possible outcomes (dot, single, boundary, wicket) can swing the batting side's
+        chance of winning by at least 1.5 times as much as an average ball. Players are scored on those balls against an
+        average player facing the same balls.</p></div></details>
   </header>
 
   <section id="lists" aria-labelledby="h-lists">
-    <div class="sec-h"><h2 id="h-lists">The two lists</h2><span class="hint">Click any player for the full evidence</span></div>
+    <div class="sec-h"><h2 id="h-lists">The two lists</h2>
+      <span class="hint">Tap a player for the evidence · <span class="chip firm">firm</span><span class="chip likely">likely</span><span class="chip near-tie">near-tie</span></span></div>
     <div class="two">
       <div class="panel"><div class="board-head"><h3>Batters</h3><span class="muted mono small" id="kc-bat"></span></div><div class="board pre" id="list-bat"></div></div>
       <div class="panel"><div class="board-head"><h3>Bowlers</h3><span class="muted mono small" id="kc-bowl"></span></div><div class="board pre" id="list-bowl"></div></div>
     </div>
-    <p class="muted small">Labels show how often a pick stays in the top 10 when the matches are resampled 300 times:
-      <span class="chip firm">firm</span> 75%+ · <span class="chip likely">likely</span> 50-75% · <span class="chip near-tie">near-tie</span> under 50%.</p>
+    <details class="more"><summary>What firm, likely and near-tie mean</summary><div class="in">
+      <p class="muted">How often a pick stays in the top 10 when the matches are resampled 300 times: firm 75%+, likely 50-75%,
+        near-tie under 50%. The share in each header is how much of the rating comes from pressure balls; the rest is the
+        player's usual form, which steadies small samples.</p></div></details>
   </section>
 
   <section id="land" aria-labelledby="h-land">
-    <div class="sec-h"><h2 id="h-land">Where pressure lives</h2><span class="hint">Drag to turn · hover a tower</span></div>
-    <div class="land">
-      <div class="stage" id="stage" role="img" aria-label="3D chart: average Pressure Index in a chase by required run rate and overs left. Pressure is highest when few overs remain and the required rate is 8 to 14."></div>
-      <div class="panel facts">
-        <p>Every tower is a chase situation: <b>required run rate</b> one way, <b>overs left</b> the other. Its height is the
-          average Pressure Index there, where 1 is an average ball and 1.5 is our pressure line.</p>
-        <div class="fact"><b class="num" id="f-peak"></b><span class="muted small" id="f-peak-t"></span></div>
-        <div class="fact"><b class="num" id="f-share"></b><span class="muted small">of chase balls are pressure balls</span></div>
-        <p class="muted small">The ridge runs along the last few overs at a gettable-but-hard rate. Early in a chase, or when the
-          rate is out of reach, almost nothing is at stake on a single ball. The same grid as a flat table is in
-          <a href="#line">Pressure line</a>.</p>
-        <div class="scale3"><span>PI 0</span><i></i><span id="f-max"></span></div>
+    <div class="claim">
+      <div><h2 id="h-land">Pressure lives at the end of a tight chase</h2>
+        <p>Each tower is a chase situation. Taller means more of the match rides on one ball.</p></div>
+      <div class="bigs flat">
+        <div class="big p"><b class="num" id="f-peak"></b><span id="f-peak-t"></span></div>
+        <div class="big"><b class="num" id="f-share"></b><span>of chase balls are pressure balls</span></div>
       </div>
     </div>
+    <div class="stage" id="stage" role="img" aria-label="3D chart: average Pressure Index in a chase by required run rate and overs left. Pressure is highest when few overs remain and the required rate is 8 to 14."></div>
+    <div class="scale3"><span>PI 0</span><i></i><span id="f-max"></span><span class="hint" style="margin-left:12px">drag to turn · point at a tower</span></div>
   </section>
 
   <section id="why" aria-labelledby="h-why">
-    <h2 id="h-why">Why we rank output, not improvement</h2>
-    <div class="two">
-      <div class="panel" style="display:grid;gap:14px;align-content:start">
-        <p>The brief asks how players perform under pressure compared with their usual level. We measured that gap for every player,
-          then checked whether it repeats: split each player's matches into odd and even games and correlate the two halves.
-          0 means luck, 1 means a fixed skill.</p>
-        <p>The gap above a player's own level barely repeats. How much he produces under pressure, against an average player
-          facing the same balls, repeats better: about three times as well for batters, and better for bowlers too. So the lists rank that, with the player's usual level
-          steadying small samples.</p>
-        <div class="callout" id="odd"></div>
-      </div>
-      <div class="panel"><h3 style="margin-bottom:10px">Does it repeat? (split-half r)</h3><div id="repeat"></div>
-        <div class="legend" style="margin-top:6px"><span style="--c:var(--accent)">Batters</span><span style="--c:var(--normal)">Bowlers</span></div></div>
+    <div class="claim">
+      <div><h2 id="h-why">Rising to the occasion is mostly luck. Output is not.</h2>
+        <p>Split each player's matches in two and check what carries over from one half to the other.</p></div>
+      <div class="bigs" id="why-bigs"></div>
     </div>
+    <details class="more"><summary>See the split-half test</summary><div class="in">
+      <div class="two">
+        <div class="panel"><h3 style="margin-bottom:10px">Does it repeat? (split-half r)</h3><div id="repeat"></div>
+          <div class="legend" style="margin-top:6px"><span style="--c:var(--accent)">Batters</span><span style="--c:var(--normal)">Bowlers</span></div></div>
+        <div class="callout" id="odd"></div>
+      </div></div></details>
   </section>
 
   <section id="tested" aria-labelledby="h-tested">
-    <h2 id="h-tested">Tested against the alternatives</h2>
-    <div class="two">
-      <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Do pressure balls decide matches?</h3>
-        <p class="muted small">How often the side that does better on a set of balls wins the match.</p>
-        <div class="sens" id="decides"></div></div>
-      <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Who rises, who dips</h3>
-        <p class="muted small">Pressure minus usual level for every eligible player, 90% range from 1,000 match resamples. A player clearly rises or dips when the whole range sits on one side of zero.</p>
-        <div class="scroll"><table id="rise"></table></div><div id="rise-names" class="small"></div></div>
+    <div class="claim">
+      <div><h2 id="h-tested">Tested against every obvious alternative</h2>
+        <p>Four checks against the obvious ways to pick a list.</p></div>
+      <div></div>
     </div>
-    <div class="two">
-      <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Against the obvious list</h3>
-        <p class="muted small" id="naive-h"></p>
-        <div class="seg" id="nv-seg" role="group" aria-label="Role" style="--n:2"><button data-r="bat" aria-pressed="true">Batters</button><button data-r="bowl" aria-pressed="false">Bowlers</button></div>
+    <div class="score4">
+      <div><b class="num p" id="t-dec"></b><span id="t-dec-s"></span></div>
+      <div><b class="num" id="t-rise"></b><span id="t-rise-s"></span></div>
+      <div><b class="num" id="t-naive"></b><span id="t-naive-s"></span></div>
+      <div><b class="num" id="t-bt"></b><span id="t-bt-s"></span></div>
+    </div>
+    <details class="more"><summary>Open the four checks</summary><div class="in"><div class="two">
+      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Do pressure balls decide matches?</h3><div class="sens" id="decides"></div></div>
+      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Who rises, who dips</h3><div class="scroll"><table id="rise"></table></div><div id="rise-names" class="small"></div></div>
+      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Against a death-overs list</h3><p class="muted small" id="naive-h"></p>
+        <div class="seg" id="nv-seg" role="group" aria-label="Role" style="--n:2;justify-self:start"><button data-r="bat" aria-pressed="true">Batters</button><button data-r="bowl" aria-pressed="false">Bowlers</button></div>
         <div class="scroll"><table id="naive"></table></div></div>
-      <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Head-to-head backtest</h3>
-        <p class="muted small">Each method picks a top 10 from 2022-24 only. Score: what those players did on pressure balls in 2025-26 (run value per 100 balls above an average player in the same spot).</p>
-        <div class="scroll"><table id="bt"></table></div><p class="muted small" id="bt-note"></p></div>
-    </div>
+      <div class="panel" style="display:grid;gap:10px;align-content:start"><h3>Head-to-head backtest</h3><div class="scroll"><table id="bt"></table></div><p class="muted small" id="bt-note"></p></div>
+    </div></div></details>
   </section>
 
   <section id="lab" aria-labelledby="h-lab">
     <div class="sec-h"><h2 id="h-lab">What-if lab</h2>
       <div class="seg" id="role-seg" role="group" aria-label="Role" style="--n:2"><button data-role="bat" aria-pressed="true">Batters</button><button data-role="bowl" aria-pressed="false">Bowlers</button></div></div>
-    <p class="muted">Move the settings and the whole pool is re-ranked live with the report's exact formula:
-      rating = (pressure runs + KC × usual level) ÷ (pressure balls + KC), among players whose pressure output is in the top share of the pool.</p>
+    <p class="muted">Change the settings. The whole pool re-ranks live with the report's exact formula.</p>
     <div class="lab">
       <div class="panel" style="display:grid;gap:18px;align-content:start">
-        <div class="ctl"><label for="kc">KC: balls of usual form mixed in <output id="kc-o"></output></label>
+        <div class="ctl"><label for="kc">How much usual form counts (KC) <output id="kc-o"></output></label>
           <input type="range" id="kc" min="0" max="3000" step="25"><div class="presets" id="kc-p"></div></div>
         <div class="ctl"><label for="gate">Gate: top share under pressure <output id="gate-o"></output></label>
           <input type="range" id="gate" min="0.10" max="1" step="0.05"><div class="presets" id="gate-p"></div></div>
@@ -348,38 +439,44 @@ footer { font-size: 13px; color: var(--muted); }
         <div class="board-head" style="margin:0"><h3>The whole pool</h3>
           <div class="seg" id="y-seg" role="group" aria-label="Vertical axis" style="--n:2"><button data-y="A" aria-pressed="true">Pressure output</button><button data-y="E" aria-pressed="false">Rating</button></div></div>
         <div class="sc-wrap" id="sc-wrap"><div id="scatter"></div><div class="tip" id="tip"></div></div>
-        <div class="legend"><span style="--c:var(--accent)">Top 10 now</span><span style="--c:var(--normal)">Passes the gate</span><span style="--c:var(--line)">Outside the gate</span><span style="--c:transparent;border:1px solid var(--muted);border-radius:50%">Size = pressure balls</span></div>
+        <div class="legend"><span style="--c:var(--accent)">Top 10 now</span><span style="--c:var(--normal)">Passes the gate</span><span style="--c:var(--line)">Outside the gate</span><span class="sz">Size = pressure balls</span></div>
       </div>
     </div>
-    <div class="two">
-      <div class="panel"><h3 style="margin-bottom:4px">Choosing KC: forecasting held-out pressure output</h3>
+    <details class="more"><summary>How KC was chosen</summary><div class="in"><div class="two">
+      <div class="panel"><h3 style="margin-bottom:4px">Forecasting held-out pressure output</h3>
         <p class="muted small" style="margin-bottom:10px">% better than a league-average guess. Dashed: usual form alone.</p><div id="kcc"></div></div>
       <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Why bowlers use KC = <span id="kcb"></span></h3><p id="kc-why"></p></div>
-    </div>
+    </div></div></details>
   </section>
 
   <section id="line" aria-labelledby="h-line">
-    <h2 id="h-line">Where the pressure line sits</h2>
-    <div class="two">
-      <div class="panel scroll"><table id="cut"></table>
-        <p class="muted small" style="margin-top:10px">Below 1.5, a quarter or more of all balls would count as pressure. Above 1.5, bowlers' pressure output stops repeating.</p></div>
-      <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Share of balls that are pressure balls</h3><div class="heat" id="heat"></div>
-        <p class="muted small">The chase at the death is where pressure lives. Middle overs of a first innings almost never qualify.</p></div>
+    <div class="claim">
+      <div><h2 id="h-line">The line sits at 1.5</h2>
+        <p>Lower and a quarter of all balls count as pressure. Higher and bowlers' pressure output stops repeating.</p></div>
+      <div class="mega" id="line-bigs"></div>
     </div>
+    <details class="more"><summary>Every line we tested</summary><div class="in"><div class="two">
+      <div class="panel scroll"><table id="cut"></table></div>
+      <div class="panel" style="display:grid;gap:12px;align-content:start"><h3>Share of balls that are pressure balls</h3><div class="heat" id="heat"></div></div>
+    </div></div></details>
   </section>
 
   <section id="robust" aria-labelledby="h-rob">
-    <h2 id="h-rob">Does the list survive other choices?</h2>
-    <div class="two">
-      <div class="panel"><div class="sens" id="sens"></div></div>
-      <div class="panel scroll" style="display:grid;gap:10px;align-content:start"><h3>Forecast test, seasons 2024-2026</h3>
-        <p class="muted small">Each rating is built on earlier seasons only, then ranked against next-season pressure output.</p><table id="fwd"></table></div>
+    <div class="claim">
+      <div><h2 id="h-rob">Change a setting, the list holds</h2>
+        <p>Top-10 picks kept when one choice is changed.</p></div>
+      <div class="bigs flat" id="rob-bigs"></div>
     </div>
+    <div class="panel"><div class="sens" id="sens"></div>
+      <details class="more" style="margin-top:10px"><summary>All other changes</summary><div class="in"><div class="sens" id="sens-more"></div></div></details></div>
+    <details class="more"><summary>Forecast test, seasons 2024-2026</summary><div class="in"><div class="panel scroll">
+      <p class="muted small" style="margin-bottom:8px">Each rating is built on earlier seasons only, then ranked against next-season pressure output.</p><table id="fwd"></table></div></div></details>
   </section>
 
   <section id="limits" aria-labelledby="h-lim">
     <h2 id="h-lim">Where the model is less sure</h2>
-    <div class="panel"><ul class="lim" id="lim"></ul></div>
+    <div class="strip" id="lim-tiles"></div>
+    <details class="more"><summary>Every caveat in full</summary><div class="in"><ul class="lim" id="lim"></ul></div></details>
   </section>
   <footer>Every number is read from <span class="mono">outputs/</span> by <span class="mono">src/build_dashboard.py</span>; rebuild everything with <span class="mono">python run_all.py</span>.</footer>
 </div></div>
@@ -408,21 +505,73 @@ function countUp(el, to, dec, suffix) {
   requestAnimationFrame(step);
 }
 
-// ---------- hero stats
+// ---------- hero: stat strip, split-flap board, and every claim number (all from D)
+const CU = [];   // numbers that count up once when they come on screen
+function setNum(el, v, dec = 0, pre = "", suf = "") {
+  el.textContent = pre + (+v).toFixed(dec) + suf;
+  if (!RM) CU.push({el, v: +v, dec, pre, suf});
+}
 (function () {
-  const h = D.headline, C = 2 * Math.PI * 26;
-  const ring = v => `<svg viewBox="0 0 64 64" aria-hidden="true"><circle class="ring-bg" cx="32" cy="32" r="26" fill="none" stroke-width="7"/>
-    <circle class="ring" data-v="${v}" cx="32" cy="32" r="26" fill="none" stroke-width="7" stroke-linecap="round" transform="rotate(-90 32 32)" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - v / 100)}"/></svg>`;
+  const h = D.headline, dec = D.alt.decides[0]["winner_predicted_%"];
+  const pool = D.roles.bat.pool + D.roles.bowl.pool;
   $("#stats").innerHTML = `
-    <div class="stat">${ring(h.balls)}<b class="num" data-n="${h.balls}" data-s="%">${h.balls}%</b><span>of balls are pressure balls</span></div>
-    <div class="stat">${ring(h.swing)}<b class="num" data-n="${h.swing}" data-s="%">${h.swing}%</b><span>of all win-chance swing happens on them</span></div>
-    <div class="stat"><div class="lev"><i style="background:var(--soft);transform:scaleX(${1 / h.lever})"></i><i class="levbar" style="background:var(--accent)"></i></div>
-      <b class="num" data-n="${h.lever}" data-s="×" data-d="1">${h.lever}×</b><span>the swing of an average ball</span></div>`;
-  if (!RM) {
-    document.querySelectorAll(".ring").forEach(r => { const t = r.getAttribute("stroke-dashoffset"); r.setAttribute("stroke-dashoffset", C); later(() => r.setAttribute("stroke-dashoffset", t)); });
-    const lb = $(".levbar"); lb.style.transform = "scaleX(0)"; later(() => lb.style.transform = "scaleX(1)");
-  }
-  document.querySelectorAll("[data-n]").forEach(el => countUp(el, +el.dataset.n, +(el.dataset.d || 0), el.dataset.s));
+    <div><b class="num p" id="s1"></b><span>of balls are pressure balls</span></div>
+    <div><b class="num" id="s2"></b><span>of all swings in win chance happen on them</span></div>
+    <div><b class="num p" id="s3"></b><span>of matches are won by the side that wins those balls</span></div>
+    <div><b class="num" id="s4"></b><span>players rated, IPL and T20I together</span></div>`;
+  setNum($("#s1"), h.balls, 0, "", "%"); setNum($("#s2"), h.swing, 0, "", "%");
+  setNum($("#s3"), dec, 0, "", "%"); setNum($("#s4"), pool);
+
+  // split-flap scoreboard: the two #1 picks
+  const rows = ["bat", "bowl"].map(r => ({r, p: TOP(r)[0]}));
+  $("#flapboard").innerHTML = rows.map(({r, p}) =>
+    `<button class="brow" data-role="${r}" data-name="${esc(p.name)}" aria-label="Number 1 ${r === "bat" ? "batter" : "bowler"}: ${esc(p.name)}, rating ${f1(p.score)}">
+      <span class="tag">#1 ${r === "bat" ? "BATTER" : "BOWLER"} UNDER PRESSURE</span><span class="flap" data-t="${esc(p.name.toUpperCase())}" aria-hidden="true"></span>
+      <span class="sc" aria-hidden="true">${f1(p.score)}</span></button>`).join("");
+  const ABC = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  document.querySelectorAll(".flap").forEach((f, row) => {
+    const t = f.dataset.t;
+    f.innerHTML = [...t].map(c => `<span class="${c === " " ? "sp" : ""}">${c === " " ? "" : (RM ? c : ABC[(Math.random() * 26) | 0])}</span>`).join("");
+    if (RM) return;
+    [...f.children].forEach((cell, i) => {
+      const c = t[i]; if (c === " ") return;
+      let n = 6 + i * 2 + row * 4;   // cells settle left to right, second row a beat later
+      const tick = () => { if (--n <= 0) { cell.textContent = c; return; } cell.textContent = ABC[(Math.random() * 26) | 0]; setTimeout(tick, 42); };
+      setTimeout(tick, 350);
+    });
+  });
+})();
+
+// ---------- claim numbers
+(function () {
+  const rb = D.roles.bat.repeat, rw = D.roles.bowl.repeat;
+  $("#why-bigs").innerHTML = `
+    <div class="big"><b class="num dbl">${(+rb.rise).toFixed(2)}<span class="vs">/</span>${(+rw.rise).toFixed(2)}</b><span><strong>Rising above your own level</strong> carries over this much, batters / bowlers (0 = pure luck)</span></div>
+    <div class="big p"><b class="num dbl">${(+rb.output).toFixed(2)}<span class="vs">/</span>${(+rw.output).toFixed(2)}</b><span><strong>Output under pressure</strong> carries over this much, so that is what we rank</span></div>`;
+  const A = D.alt, dc = A.decides, rr = Object.fromEntries(A.rise.map(r => [r.role, r])), ns = Object.fromEntries(A.naive_sum.map(r => [r.role, r]));
+  setNum($("#t-dec"), dc[0]["winner_predicted_%"], 0, "", "%");
+  $("#t-dec-s").textContent = `win the pressure balls, win the match (ordinary balls: ${Math.round(dc[1]["winner_predicted_%"])}%)`;
+  $("#t-rise").innerHTML = `${rr.bat.clear_risers}<span class="vs">vs</span>${Math.round(rr.bat.expected_each_side_by_luck)}`;
+  $("#t-rise-s").textContent = `batters who clearly rise, against luck (bowlers: pure luck)`;
+  $("#t-naive").innerHTML = `${ns.bat.overlap_top10}<span class="vs">/</span>10`;
+  $("#t-naive-s").textContent = `batters shared with a death-overs list (bowlers ${ns.bowl.overlap_top10}/10)`;
+  const bt = {}; A.backtest.forEach(x => { (bt[x.method] ||= {})[x.role] = x; });
+  const dv = bt["death overs (no win model)"].bat.test_rv_per100, ov = bt["ours"].bat.test_rv_per100;
+  setNum($("#t-bt"), dv, 1, dv > 0 ? "+" : "");
+  $("#t-bt-s").textContent = `death-overs batting picks in the next two seasons (ours +${(+ov).toFixed(1)})`;
+  $("#line-bigs").innerHTML = `<b class="num">1.5</b><span><strong>The pressure line.</strong> ${Math.round(D.headline.balls)}% of balls clear it, and each swings the match ${(+D.headline.lever).toFixed(1)}× as much as an average ball.</span>`;
+  const kept = r => D.roles[r].sens.filter(s => s.overlap_with_base_top10 >= 8).length + "<span class=\"vs\">/</span>" + D.roles[r].sens.length;
+  $("#rob-bigs").innerHTML = `
+    <div class="big"><b class="num dbl">${kept("bat")}</b><span><strong>Batters:</strong> changes that keep 8 or more of the top 10</span></div>
+    <div class="big"><b class="num dbl">${kept("bowl")}</b><span><strong>Bowlers:</strong> changes that keep 8 or more of the top 10</span></div>`;
+  const nt = r => TOP(r).filter(p => p.band === "near-tie");
+  const fb = D.roles.bowl.forward.find(r => r["forecast (built on earlier seasons only)"] === "final rating");
+  $("#lim-tiles").innerHTML = [
+    [`${nt("bat").length + nt("bowl").length}`, `picks make the top 10 under half the time: the bottom of each list is close`],
+    [`${A.chase_only.bat}·${A.chase_only.bowl}`, `batters · bowlers stay if only chases count as pressure`],
+    [`Unproven`, `the bowling list as a forecast of next season`],
+    [`Weaker`, `the first-innings win model, next to the chase model`]
+  ].map(([v, t], i) => `<div><b class="${i < 2 ? "p" : ""}">${v}</b><span>${t}</span></div>`).join("");
 })();
 
 // ---------- submitted lists
@@ -504,7 +653,7 @@ function lab() {
   const {rows, cut} = rateAll(r, kc, gate);
   const top = rows.slice(0, 10), sub = new Map(TOP(r).map(p => [p.name, p.rank]));
   const kept = top.filter(p => sub.has(p.name)).length;
-  $("#kept").innerHTML = `${kept}/10<small>of the submitted ${ROLE[r].toLowerCase()} stay in the top 10</small>`;
+  $("#kept").innerHTML = `${kept}/10<small>stay in the top 10</small>`;
   $("#segs").innerHTML || ($("#segs").innerHTML = Array.from({length: 10}, (_, i) => `<i style="--i:${i}"></i>`).join(""));
   [...$("#segs").children].forEach((s, i) => s.classList.toggle("on", i < kept));
   renderWi(top, sub);
@@ -548,7 +697,7 @@ function buildScatter() {
   for (let t = y0; t <= y1; t += st) s += `<line class="ax" x1="${L}" x2="${W - R}" y1="${SY(t)}" y2="${SY(t)}" stroke-opacity="${t === 0 ? 1 : .5}"/><text x="${L - 6}" y="${SY(t) + 4}" text-anchor="end">${t}</text>`;
   s += `<text x="${(L + W - R) / 2}" y="${H - 4}" text-anchor="middle">usual level: runs ${r === "bat" ? "added" : "saved"} per 100 normal balls →</text>`;
   s += `<text x="12" y="${(T + H - B) / 2}" text-anchor="middle" transform="rotate(-90 12 ${(T + H - B) / 2})">${state.y === "A" ? "pressure output" : "rating"} →</text></g>`;
-  s += `<g class="gate" id="gl"><line x1="${L}" x2="${W - R}" y1="0" y2="0" stroke="var(--accent)" stroke-dasharray="6 5" stroke-width="1.5"/><text id="gl-t" x="${W - R}" y="-6" text-anchor="end" style="fill:var(--accent)"></text></g><g id="pts">`;
+  s += `<g class="gate" id="gl"><line x1="${L}" x2="${W - R}" y1="0" y2="0" stroke="var(--accent)" stroke-dasharray="6 5" stroke-width="1.5"/><text id="gl-t" x="${L + 6}" y="-6" text-anchor="start" style="fill:var(--accent)"></text></g><g id="pts">`;
   for (const p of ps) {
     const rr = (3 + Math.sqrt(p.p_wb) / 5).toFixed(1);
     s += `<g class="pt" tabindex="0" role="button" aria-label="${esc(p.name)}" data-role="${r}" data-name="${esc(p.name)}" style="transform:translate(${SX(p.normal)}px,${SY(state.y === "A" ? p.A : eAt(p, state.kc[r]))}px)">
@@ -568,10 +717,22 @@ function updateScatter(rows, cut, gate, topset) {
     if (topset.has(p.name)) lifted.push(g);
   }
   lifted.forEach(g => { if (g !== pts.lastElementChild) pts.appendChild(g); });
+  // nudge the top-10 name labels so none overlap (12px rows), flipping to the left near the right edge
+  const placed = [];
+  lifted.map(g => { const p = by.get(g.dataset.name); return {g, x: SX(p.normal), y: SY(state.y === "A" ? p.A : p.E)}; })
+    .sort((a, b) => a.y - b.y).forEach(o => {
+      const t = o.g.querySelector("text"), w = 7 * t.textContent.length, left = o.x + w + 14 > SC.W - SC.R;
+      const x0 = left ? o.x - w - 6 : o.x + 6;
+      let dy = 4;
+      while (placed.some(q => Math.abs(q.y - (o.y + dy)) < 12 && x0 < q.x1 && x0 + w > q.x0)) dy += 12;
+      placed.push({x0, x1: x0 + w, y: o.y + dy});
+      t.setAttribute("y", dy); t.setAttribute("text-anchor", left ? "end" : "start");
+      t.setAttribute("x", left ? -(+o.g.querySelector("circle").getAttribute("r") + 4) : +o.g.querySelector("circle").getAttribute("r") + 4);
+    });
   const gl = $("#gl");
   if (state.y === "A" && gate < 1) {
     const srt = rows.map(p => p.A).sort((a, b) => b - a), v = (srt[cut - 1] + (srt[cut] ?? srt[cut - 1])) / 2;
-    gl.style.opacity = 1; gl.style.transform = `translateY(${SY(v)}px)`; $("#gl-t").textContent = `gate: top ${Math.round(gate * 100)}% under pressure`;
+    gl.style.opacity = 1; gl.style.transform = `translateY(${SY(v)}px)`; $("#gl-t").textContent = `gate: top ${Math.round(gate * 100)}%`;
   } else gl.style.opacity = 0;
 }
 (function tooltips() {
@@ -636,9 +797,13 @@ function updateScatter(rows, cut, gate, topset) {
 // ---------- robustness
 (function () {
   const bowl = Object.fromEntries(D.roles.bowl.sens.map(s => [s.variant, s.overlap_with_base_top10]));
-  const m = v => v == null ? `<span class="mini">–</span>` : `<span class="mini"><span class="bar"><i style="--w:${v / 10};background:${v >= 8 ? "var(--firm)" : v >= 6 ? "var(--likely)" : "var(--near)"}"></i></span>${v}/10</span>`;
-  $("#sens").innerHTML = `<div class="h"><span>Change</span><span>Batters kept</span><span>Bowlers kept</span></div>` +
-    D.roles.bat.sens.map(s => `<div><span>${esc(s.variant)}</span>${m(s.overlap_with_base_top10)}${m(bowl[s.variant])}</div>`).join("");
+  const m = v => v == null ? `<span class="mini">–</span>` : `<span class="mini"><span class="bar"><i style="--w:${v / 10};background:${v >= 8 ? "var(--accent)" : "var(--muted)"}"></i></span>${v}/10</span>`;
+  // the 7 changes that move the lists most stay visible; the rest sit in a drawer
+  const rows = D.roles.bat.sens.map(s => ({v: s.variant, b: s.overlap_with_base_top10, w: bowl[s.variant]}))
+    .sort((x, y) => Math.min(x.b ?? 10, x.w ?? 10) + (x.b ?? 10) + (x.w ?? 10) - (Math.min(y.b ?? 10, y.w ?? 10) + (y.b ?? 10) + (y.w ?? 10)));
+  const row = r => `<div><span>${esc(r.v)}</span>${m(r.b)}${m(r.w)}</div>`, head = `<div class="h"><span>Change</span><span>Batters kept</span><span>Bowlers kept</span></div>`;
+  $("#sens").innerHTML = head + rows.slice(0, 7).map(row).join("");
+  $("#sens-more").innerHTML = head + rows.slice(7).map(row).join("");
   const f = [...D.roles.bat.forward.map(r => ({...r, role: "Batters"})), ...D.roles.bowl.forward.map(r => ({...r, role: "Bowlers"}))];
   const K = "forecast (built on earlier seasons only)";
   $("#fwd").innerHTML = `<thead><tr><th>Role</th><th>Forecast from</th><th>Rank r</th><th>p</th></tr></thead><tbody>` +
@@ -724,7 +889,7 @@ function openCard(role, name) {
     const ss = Object.entries(d.seasons), mx = Math.max(10, ...ss.map(([, x]) => Math.abs(x ?? 0))), W = 620, H = 120, M = H / 2, bw = W / ss.length;
     let s = `<svg viewBox="0 0 ${W} ${H + 18}" role="img" aria-label="Pressure run value by season"><line class="ax" x1="0" x2="${W}" y1="${M}" y2="${M}"/>`;
     ss.forEach(([y, x], k) => { const cx = k * bw + bw / 2;
-      if (x != null) { const hgt = (M - 14) * Math.abs(x) / mx; s += `<rect x="${cx - bw * .28}" y="${x >= 0 ? M - hgt : M}" width="${bw * .56}" height="${Math.max(hgt, 1)}" rx="3" fill="${x >= 0 ? "var(--firm)" : "var(--near)"}"
+      if (x != null) { const hgt = (M - 14) * Math.abs(x) / mx; s += `<rect x="${cx - bw * .28}" y="${x >= 0 ? M - hgt : M}" width="${bw * .56}" height="${Math.max(hgt, 1)}" rx="3" fill="${x >= 0 ? "var(--accent)" : "var(--normal)"}"
         style="transform-box:fill-box;transform-origin:${x >= 0 ? "bottom" : "top"};${RM ? "" : `animation:sy .6s var(--ease) ${k * 70}ms both`}"/><text x="${cx}" y="${x >= 0 ? M - hgt - 4 : M + hgt + 12}" text-anchor="middle">${sg(x)}</text>`; }
       else s += `<text x="${cx}" y="${M - 4}" text-anchor="middle">–</text>`;
       s += `<text x="${cx}" y="${H + 14}" text-anchor="middle" style="fill:var(--ink)">${y}</text>`; });
@@ -795,10 +960,26 @@ presets(); buildScatter(); lab();
   document.documentElement.classList.add("anim");
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
     {threshold: 0.12, rootMargin: "0px 0px -6% 0px"});
-  document.querySelectorAll("main section, .wrap > section").forEach(sec => {
-    const items = sec.querySelectorAll(":scope > h2, :scope > .sec-h, :scope > p, :scope > .panel, :scope > .two > .panel, :scope > .land > *, :scope > .lab > .panel");
-    items.forEach((el, i) => { el.classList.add("rv"); el.style.setProperty("--d", Math.min(i, 6)); io.observe(el); });
+  // clip-path hides a target from IntersectionObserver, so watch whole sections and reveal their blocks
+  const sio = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; sio.unobserve(e.target);
+    e.target.querySelectorAll(".rv").forEach(x => x.classList.add("in")); }), {rootMargin: "0px 0px -12% 0px"});
+  document.querySelectorAll(".wrap > section").forEach(sec => {
+    const items = sec.querySelectorAll(":scope > h2, :scope > .sec-h, :scope > .claim > div > h2, :scope > .claim > div > p, .bigs > .big, :scope > .two > .panel, :scope > .lab > .panel, .tiles > .tile, :scope > .stage");
+    items.forEach((el, i) => { el.classList.add("rv"); el.style.setProperty("--d", Math.min(i, 6)); });
+    sio.observe(sec);
   });
+  document.querySelectorAll(".strip > div").forEach((el, i) => { el.classList.add("rv"); el.style.setProperty("--d", i + 3); });
+  sio.observe($("header.top"));
+  // claim numbers count up once, when they come on screen
+  const cio = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; cio.unobserve(e.target);
+    const c = CU.find(x => x.el === e.target); if (!c) return;
+    const t0 = performance.now(), d = 900;
+    const step = t => { const k = Math.min(1, (t - t0) / d), v = c.v * (1 - Math.pow(1 - k, 4));
+      c.el.textContent = c.pre + v.toFixed(c.dec) + c.suf; if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }), {threshold: 0.6});
+  CU.forEach(c => cio.observe(c.el));
   if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
   document.querySelectorAll(".panel").forEach(p => {
     if (p.closest("#lab") || p.closest("dialog")) return;   // the lab's chart reads pointer positions: keep it flat
@@ -867,9 +1048,9 @@ presets(); buildScatter(); lab();
     floor.material.transparent = true; floor.material.opacity = 0.35; scene.add(floor);
 
     function paint() {
-      const soft = new THREE.Color(css("--soft")), acc = new THREE.Color(css("--accent")), nor = new THREE.Color(css("--normal"));
+      const surf = new THREE.Color(css("--surface")), soft = new THREE.Color(css("--soft")), acc = new THREE.Color(css("--accent")), nor = new THREE.Color(css("--normal"));
       bars.forEach(b => { const k = Math.pow(Math.min(1, b.userData.v / maxPI), 0.75);
-        b.material.color.copy(b.userData.v < 1.5 ? soft.clone().lerp(nor, 0.25 + 0.5 * k) : soft.clone().lerp(acc, 0.35 + 0.65 * k));
+        b.material.color.copy(b.userData.v < 1.5 ? surf.clone().lerp(nor, 0.35 + 0.45 * k) : surf.clone().lerp(acc, 0.45 + 0.55 * k));
         b.userData.base = b.material.color.clone(); });
       plane.material.color.copy(acc); edge.material.color.copy(acc);
       floor.material.color = new THREE.Color(css("--line"));
@@ -884,19 +1065,22 @@ presets(); buildScatter(); lab();
     T.rows.forEach((r, i) => labels.push({el: lab(r), p: new THREE.Vector3(cx + S * 1.05, 0, i * S - cz)}));
     labels.push({el: lab("overs left", "t"), p: new THREE.Vector3(0, 0, -cz - S * 1.8)});
     labels.push({el: lab("required rate", "t"), p: new THREE.Vector3(cx + S * 2.2, 0, 0)});
-    labels.push({el: lab("pressure line (PI 1.5)", "t"), p: new THREE.Vector3(-cx - S * 0.2, 1.5 * H + 0.25, cz + S * 0.6)});
+    labels.push({el: lab("pressure line", "t"), p: new THREE.Vector3(cx + S * 0.9, 1.5 * H + 0.2, cz + S * 0.4)});
+    labels.push({el: lab(`peak ${peak.v.toFixed(1)}`, "pk"), p: new THREE.Vector3(peak.j * S - cx, peak.v * H + 0.45, peak.i * S - cz)});
     const tip = document.createElement("div"); tip.className = "tip3"; stage.appendChild(tip);
-    const hint = document.createElement("div"); hint.className = "hint3"; hint.textContent = "drag to turn"; stage.appendChild(hint);
+    const hint = document.createElement("div"); hint.className = "hint3"; hint.textContent = matchMedia("(hover: none)").matches ? "drag to turn · tap a tower" : "drag to turn"; stage.appendChild(hint);
 
     // camera orbit: drag to turn; scroll position tilts the view a little
     let theta = 2.45, phi = 0.98, vel = RM ? 0 : 0.0016, drag = null, last = 0, hover = null, w = 1, h = 1;
-    const R = Math.max(nc, nr) * S * 2.35, target = new THREE.Vector3(0, 0.9, 0);
+    const R0 = Math.max(nc, nr) * S * 2.35, target = new THREE.Vector3(0, 0.9, 0);
+    let R = R0;   // pulled back on tall, narrow screens so the whole grid fits
     let narrow = false;
     function size() { const r = stage.getBoundingClientRect(); w = r.width; h = r.height; narrow = w < 560; hint.hidden = narrow; renderer.setSize(w, h, false);
-      camera.aspect = w / h; camera.updateProjectionMatrix(); }
+      camera.aspect = w / h; camera.updateProjectionMatrix(); R = R0 * Math.pow(Math.max(1, 1.2 / camera.aspect), 0.8); }
     new ResizeObserver(size).observe(stage); size();
     stage.addEventListener("pointerdown", e => { drag = {x: e.clientX, y: e.clientY, t: theta, p: phi}; stage.classList.add("drag"); stage.setPointerCapture(e.pointerId); hint.style.opacity = 0; });
-    const endDrag = () => { drag = null; stage.classList.remove("drag"); };
+    const endDrag = e => { const tap = drag && e && Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 6; drag = null; stage.classList.remove("drag");
+      if (tap) stage.dispatchEvent(new PointerEvent("pointermove", {clientX: e.clientX, clientY: e.clientY})); };
     stage.addEventListener("pointerup", endDrag); stage.addEventListener("pointercancel", endDrag);
     const ray = new THREE.Raycaster(), mp = new THREE.Vector2();
     stage.addEventListener("pointermove", e => {
